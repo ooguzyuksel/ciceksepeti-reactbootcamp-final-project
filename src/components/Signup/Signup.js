@@ -1,29 +1,42 @@
 /* eslint-disable prettier/prettier */
 import "./signup.scss";
 
-import axios from "axios";
-
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { registerInitiate } from "redux/actions";
+import { useHistory } from "react-router-dom";
 
 function Signup() {
   const [newMail, setMail] = useState("");
   const [newPassword, setPassword] = useState("");
-  const [token, setToken] = useState({});
-  const [error, setError] = useState("");
+  // const [token, setToken] = useState({});
+  // const [error, setError] = useState("");
+
+  const history = useHistory();
+  let dispatch = useDispatch();
+
+  let { user, error } = useSelector((state) => state.auth);
+  useEffect(() => {
+    {
+      user && history.push("/");
+    }
+    console.log({ user });
+    console.log({ error });
+  }, [user]);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-
-    const article = { email: newMail, password: newPassword };
-    axios
-      .post("/authorization/signup", article)
-      .then((response) => setToken(response))
-      .catch((err) => setError(err));
+    dispatch(registerInitiate(newMail, newPassword));
+    // const article = { email: newMail, password: newPassword };
+    // axios
+    //   .post("/authorization/signup", article)
+    //   .then((response) => setToken(response))
+    //   .catch((err) => setError(err));
   };
 
-  useEffect(() => {
-    console.log(token);
-  }, [token]);
+  // useEffect(() => {
+  //   console.log(token);
+  // }, [token]);
 
   const onChangeHandler = (event) => {
     let input = event.target.value;

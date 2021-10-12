@@ -1,3 +1,4 @@
+import Home from "components/Home/Home";
 import Login from "components/Login/Login";
 import Signup from "components/Signup/Signup";
 import React from "react";
@@ -11,6 +12,7 @@ function App() {
       <Link to="/login">Giriş Yap</Link>
 
       <Switch>
+        <Route exact path="/" component={Home} />
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
       </Switch>

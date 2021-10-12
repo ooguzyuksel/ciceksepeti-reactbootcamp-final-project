@@ -1,21 +1,33 @@
 /* eslint-disable prefer-const */
 import "./login.scss";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginInitiate } from "redux/actions";
+import { useHistory } from "react-router-dom";
 
 function Login() {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
-
+  const history = useHistory();
   let dispatch = useDispatch();
 
+  let { user, error } = useSelector((state) => state.auth);
+  useEffect(() => {
+    {
+      user && history.push("/");
+    }
+    console.log({ user });
+    console.log({ error });
+  }, [user]);
+
+  // onSubmitHandler will submit taken data from input and Redirect to HOME Page
   const onSubmitHandler = (e) => {
     e.preventDefault();
     dispatch(loginInitiate(mail, password));
   };
 
+  // this is going to return entered value into input
   const onChangeHandler = (e) => {
     let input = e.target.value;
     {

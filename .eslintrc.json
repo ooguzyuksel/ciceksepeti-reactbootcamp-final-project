@@ -29,7 +29,6 @@
       }
     ],
     "no-param-reassign": "off",
-    "react-hooks/exhaustive-deps": "warn",
     "react-hooks/rules-of-hooks": "error",
     "react/jsx-props-no-spreading": "off",
     "react/react-in-jsx-scope": "off",
@@ -41,6 +40,7 @@
     "jsx-a11y/label-has-associated-control": "off",
     "prefer-const": "off",
     "func-names": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "react-hooks/exhaustive-deps": "off"
   }
 }
