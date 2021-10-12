@@ -7,4 +7,10 @@ module.exports = (app) => {
       changeOrigin: true,
     })
   );
+  app.use(
+    createProxyMiddleware("/authorization/signin", {
+      target: "http://bootcampapi.techcs.io/api/fe/v1",
+      changeOrigin: true,
+    })
+  );
 };

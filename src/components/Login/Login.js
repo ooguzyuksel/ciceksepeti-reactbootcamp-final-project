@@ -2,15 +2,18 @@
 import "./login.scss";
 
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loginInitiate } from "redux/actions";
 
 function Login() {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
 
+  let dispatch = useDispatch();
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    console.log({ mail });
-    console.log({ password });
+    dispatch(loginInitiate(mail, password));
   };
 
   const onChangeHandler = (e) => {
@@ -46,7 +49,7 @@ function Login() {
             <input type="text" name="password" id="password" onChange={onChangeHandler} />
           </div>
           <button type="submit" onClick={onSubmitHandler}>
-            Üye Ol
+            GİRİŞ YAP
           </button>
         </form>
       </div>

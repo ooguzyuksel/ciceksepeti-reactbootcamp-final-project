@@ -17,7 +17,7 @@ function Signup() {
     const article = { email: newMail, password: newPassword };
     axios
       .post("/authorization/signup", article)
-      .then((response) => setToken(response.data.access_token))
+      .then((response) => setToken(response))
       .catch((err) => setError(err));
   };
 
