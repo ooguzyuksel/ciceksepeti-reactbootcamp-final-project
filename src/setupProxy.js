@@ -13,4 +13,16 @@ module.exports = (app) => {
       changeOrigin: true,
     })
   );
+  app.use(
+    createProxyMiddleware("/detail/category/all", {
+      target: "http://bootcampapi.techcs.io/api/fe/v1",
+      changeOrigin: true,
+    })
+  );
+  app.use(
+    createProxyMiddleware("/product/all", {
+      target: "http://bootcampapi.techcs.io/api/fe/v1",
+      changeOrigin: true,
+    })
+  );
 };

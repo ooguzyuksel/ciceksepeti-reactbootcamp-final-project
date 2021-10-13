@@ -3,7 +3,7 @@ import "../Signup/signup.scss";
 
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loginInitiate } from "redux/actions";
+import { loginInitiate } from "redux/actions/actions";
 import { useHistory, Link } from "react-router-dom";
 import registerGirl from "../../images/registerGirl.png";
 import ikincielLogo from "../../images/ikincielLogo.svg";

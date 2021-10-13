@@ -1,0 +1,39 @@
+@import "../../scss/variables";
+
+.category-container {
+  margin: 20px 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.category-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 80vw;
+  height: 50px;
+  border-bottom: 1px solid rgba($categoryBlack, $alpha: 0.1);
+}
+
+.category-item {
+  display: inline-block;
+}
+
+.category-link {
+  text-decoration: none;
+  color: $categoryBlack;
+  border: none;
+  background-color: transparent;
+
+  cursor: pointer;
+
+  &:focus {
+    color: $categoryClickedBlue;
+    border-bottom: 1px solid $categoryClickedBlue;
+    padding-bottom: 5px;
+  }
+}

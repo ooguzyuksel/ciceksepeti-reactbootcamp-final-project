@@ -2,7 +2,7 @@
 import "./signup.scss";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { registerInitiate } from "redux/actions";
+import { registerInitiate } from "redux/actions/actions";
 import { useHistory, Link } from "react-router-dom";
 import registerGirl from "../../images/registerGirl.png";
 import ikincielLogo from "../../images/ikincielLogo.svg";

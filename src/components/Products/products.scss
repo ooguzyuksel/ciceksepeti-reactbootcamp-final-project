@@ -1,0 +1,52 @@
+@import "../../scss/variables";
+.card-top-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.card-wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 80vw;
+}
+.card-container {
+  width: 280px;
+  height: 392px;
+  margin: 0 5px 5px 0;
+  background-color: $pureWhite;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: $categoryBlack;
+  &:visited {
+    color: $categoryBlack;
+  }
+}
+.card-product-informartion {
+  width: 80%;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+
+  span:first-of-type {
+    color: $categoryClickedBlue;
+    font-weight: 800;
+  }
+}
+.card-product-price {
+  width: 80%;
+  display: flex;
+  justify-content: flex-start;
+  font-weight: bold;
+}
+.card-image {
+  width: 260px;
+  height: 297px;
+  border-radius: 10px;
+}
