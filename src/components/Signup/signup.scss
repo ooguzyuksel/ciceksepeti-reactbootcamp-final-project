@@ -1,10 +1,86 @@
-.signup-container {
+@import "../../scss/variables";
+
+.signup-wrapper {
+  overflow: hidden;
+  background: $backgroundWhite;
+}
+.signup {
   display: flex;
+  flex-direction: row;
   justify-content: center;
-  justify-content: space-evenly;
   align-items: center;
-  border: 1px solid red;
   width: 100vw;
+  max-height: 100vh;
+
+  &__image {
+    flex-shrink: 50%;
+    max-width: 550px;
+  }
+}
+
+.signup-form-wrapper {
+  width: 100%;
   height: 100vh;
-  background: lightcoral;
+  flex-shrink: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    margin-top: 10px;
+    cursor: pointer;
+    background: $darkButtonBlue;
+    color: $pureWhite;
+    font-weight: bold;
+  }
+}
+
+.signup__form {
+  border: 1px solid #fff;
+  background: #fff;
+  border-radius: 5px;
+  width: 250px;
+  height: 300px;
+  padding: 75px;
+  margin: 20px 0;
+  box-shadow: 0px 1px 9px -1px rgba(0, 0, 0, 0.69);
+
+  &__topDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 25px;
+  }
+
+  input {
+    width: 92%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background: $lightButtonGrayIdle;
+
+    &:focus {
+      outline: none;
+      background: $lightButtonBlueFocused;
+      outline: 1px solid $darkButtonBlue;
+    }
+  }
+}
+
+.signup__form__login {
+  width: 100%;
+  text-align: center;
+  padding: 25px 0;
+
+  & .link {
+    text-decoration: none;
+    color: $darkButtonBlue;
+  }
 }

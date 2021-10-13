@@ -4,7 +4,9 @@ import "./login.scss";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginInitiate } from "redux/actions";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
+import registerGirl from "../../images/registerGirl.png";
+import ikincielLogo from "../../images/ikincielLogo.svg";
 
 function Login() {
   const [mail, setMail] = useState("");
@@ -37,33 +39,52 @@ function Login() {
 
   return (
     <>
-      <h1>GİRİŞ YAP SAYFASI</h1>
-      <div className="login-container">
-        {/* Left Side Image */}
-        <div>
-          <img
-            src="https://i.picsum.photos/id/871/200/300.jpg?hmac=wXN1u0NeBnK8vCkjkJXzoTfZn6F0JBzgOpCdmRGXsw0"
-            alt="dummy"
-          />
+      {/* NEW VERSION -- Design of Login Page Inherited from Signup Page / That's why classnames include names as 'signup' */}
+      <div className="signup-wrapper">
+        <div className="signup">
+          {/* Left Side Image */}
+          <img src={registerGirl} alt="signup-girl" className="signup__image" />
+          {/* Right Side - Input Form */}
+          <div className="signup-form-wrapper">
+            <img src={ikincielLogo} alt="ikincielLogo" />
+
+            <form className="signup__form">
+              <div className="signup__form__topDiv">
+                <h3>GİRİŞ YAP</h3>
+                <small>Fırsatlardan yararlanmak için giriş yap!</small>
+              </div>
+              <div>
+                <div>
+                  <label htmlFor="email">Email</label>
+                </div>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  onChange={onChangeHandler}
+                  placeholder="email@example.com"
+                />
+              </div>
+              <div>
+                <div>
+                  <label htmlFor="password">Şifre</label>
+                </div>
+                <input type="text" name="password" id="password" onChange={onChangeHandler} />
+              </div>
+              <button type="submit" onClick={onSubmitHandler}>
+                Giriş
+              </button>
+              <div className="signup__form__login">
+                <small>
+                  Hesabın yok mu ?{" "}
+                  <Link className="link" to="/signup">
+                    Üye Ol
+                  </Link>
+                </small>
+              </div>
+            </form>
+          </div>
         </div>
-        {/* Right Side - Input Form */}
-        <form>
-          <div>
-            <div>
-              <label htmlFor="email">EMail</label>
-            </div>
-            <input type="email" name="email" id="email" onChange={onChangeHandler} />
-          </div>
-          <div>
-            <div>
-              <label htmlFor="password">Şifre</label>
-            </div>
-            <input type="text" name="password" id="password" onChange={onChangeHandler} />
-          </div>
-          <button type="submit" onClick={onSubmitHandler}>
-            GİRİŞ YAP
-          </button>
-        </form>
       </div>
     </>
   );

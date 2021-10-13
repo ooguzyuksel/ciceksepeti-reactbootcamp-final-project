@@ -1,10 +1,11 @@
 /* eslint-disable prettier/prettier */
 import "./signup.scss";
-
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { registerInitiate } from "redux/actions";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
+import registerGirl from "../../images/registerGirl.png";
+import ikincielLogo from "../../images/ikincielLogo.svg";
 
 function Signup() {
   const [newMail, setMail] = useState("");
@@ -16,27 +17,18 @@ function Signup() {
   let dispatch = useDispatch();
 
   let { user, error } = useSelector((state) => state.auth);
+
   useEffect(() => {
     {
       user && history.push("/");
     }
-    console.log({ user });
-    console.log({ error });
   }, [user]);
 
+  // dispatch mail and password to register
   const onSubmitHandler = (e) => {
     e.preventDefault();
     dispatch(registerInitiate(newMail, newPassword));
-    // const article = { email: newMail, password: newPassword };
-    // axios
-    //   .post("/authorization/signup", article)
-    //   .then((response) => setToken(response))
-    //   .catch((err) => setError(err));
   };
-
-  // useEffect(() => {
-  //   console.log(token);
-  // }, [token]);
 
   const onChangeHandler = (event) => {
     let input = event.target.value;
@@ -46,36 +38,49 @@ function Signup() {
   };
 
   return (
-    <>
-      <h1>KAYIT OL SAYFASI</h1>
-      <div className="signup-container">
+    <div className="signup-wrapper">
+      <div className="signup">
         {/* Left Side Image */}
-        <div>
-          <img
-            src="https://i.picsum.photos/id/871/200/300.jpg?hmac=wXN1u0NeBnK8vCkjkJXzoTfZn6F0JBzgOpCdmRGXsw0"
-            alt="dummy"
-          />
-        </div>
+        <img src={registerGirl} alt="signup-girl" className="signup__image" />
         {/* Right Side - Input Form */}
-        <form>
-          <div>
-            <div>
-              <label htmlFor="email">EMail</label>
+        <div className="signup-form-wrapper">
+          <img src={ikincielLogo} alt="ikincielLogo" />
+
+          <form className="signup__form">
+            <div className="signup__form__topDiv">
+              <h3>ÜYE OL</h3>
+              <small>Fırsatlardan yararlanmak için üye ol!</small>
             </div>
-            <input type="email" name="email" id="email" onChange={onChangeHandler} />
-          </div>
-          <div>
             <div>
-              <label htmlFor="password">Şifre</label>
+              <div>
+                <label htmlFor="email">Email</label>
+              </div>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                onChange={onChangeHandler}
+                placeholder="email@example.com"
+              />
             </div>
-            <input type="text" name="password" id="password" onChange={onChangeHandler} />
-          </div>
-          <button type="submit" onClick={onSubmitHandler}>
-            Üye Ol
-          </button>
-        </form>
+            <div>
+              <div>
+                <label htmlFor="password">Şifre</label>
+              </div>
+              <input type="text" name="password" id="password" onChange={onChangeHandler} />
+            </div>
+            <button type="submit" onClick={onSubmitHandler}>
+              Üye Ol
+            </button>
+            <div className="signup__form__login">
+              <small>
+                Hesabın var mı ? <Link className="link" to="/login">Giriş yap</Link>
+              </small>
+            </div>
+          </form>
+        </div>
       </div>
-    </>
+    </div>
   );
 }
 
