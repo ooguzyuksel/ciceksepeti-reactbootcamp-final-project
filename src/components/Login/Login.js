@@ -1,5 +1,5 @@
 /* eslint-disable prefer-const */
-import "./login.scss";
+import "../Signup/signup.scss";
 
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
