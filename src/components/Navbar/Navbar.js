@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from "react";
 import "./navbar.scss";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ikincielLogo from "../../images/ikincielLogo.svg";
 
@@ -16,7 +16,9 @@ function Navbar({ logoutUser }) {
     <div className="fluid-container">
       <div className="navbar-container">
         <div>
-          <img src={ikincielLogo} alt="İkinciEllogo" />
+          <Link to="/">
+            <img src={ikincielLogo} alt="İkinciEllogo" />
+          </Link>
         </div>
         <div>
           <button type="submit">Ürün Ekle</button>

@@ -10,8 +10,6 @@ import ikincielLogo from "../../images/ikincielLogo.svg";
 function Signup() {
   const [newMail, setMail] = useState("");
   const [newPassword, setPassword] = useState("");
-  // const [token, setToken] = useState({});
-  // const [error, setError] = useState("");
 
   const history = useHistory();
   let dispatch = useDispatch();
@@ -74,7 +72,10 @@ function Signup() {
             </button>
             <div className="signup__form__login">
               <small>
-                Hesabın var mı ? <Link className="link" to="/login">Giriş yap</Link>
+                Hesabın var mı ?{" "}
+                <Link className="link" to="/login">
+                  Giriş yap
+                </Link>
               </small>
             </div>
           </form>

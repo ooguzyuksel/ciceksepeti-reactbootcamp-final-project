@@ -7,7 +7,7 @@
 }
 .card-wrapper {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-wrap: wrap;
   align-items: center;
   width: 80vw;
@@ -24,6 +24,7 @@
   align-items: center;
   text-decoration: none;
   color: $categoryBlack;
+  cursor: pointer;
   &:visited {
     color: $categoryBlack;
   }

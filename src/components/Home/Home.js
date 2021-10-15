@@ -1,5 +1,6 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Navbar from "components/Navbar/Navbar";
 import Categories from "components/Categories/Categories";
@@ -28,7 +29,6 @@ function Home() {
       <div className="banner-container">
         <img src={homepageBanner} alt="HomepageBanner" className="banner-image" />
       </div>
-
       {/* Categories */}
       <Categories />
     </div>

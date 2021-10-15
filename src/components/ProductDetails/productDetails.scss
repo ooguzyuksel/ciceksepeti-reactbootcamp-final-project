@@ -1,0 +1,68 @@
+@import "../../scss/variables";
+@import "../../scss/buttons";
+
+.product-info-wrapper {
+  display: flex;
+  justify-content: center;
+  height: 88vh;
+}
+.product-info-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 75vw;
+  margin: 25px 0;
+  background: $pureWhite;
+}
+
+.letter-capital1::first-letter {
+  text-transform: capitalize;
+}
+
+.left-product-cover {
+  margin-right: 25px;
+
+  img {
+    height: 400px;
+    border-radius: 10px;
+  }
+}
+
+.right-product-info {
+  max-width: 400px;
+}
+
+.buy-button {
+  @include button($pureWhite, $darkButtonBlue);
+}
+
+.offer-button {
+  @include button($darkButtonBlue, $lightButtonBlueFocused);
+}
+
+.brand-color-status > label {
+  display: inline-block;
+  width: 150px;
+}
+
+// Responsivenes
+@media only screen and (max-width: 600px) {
+  .product-info-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .left-product-cover {
+    margin-right: 25px;
+
+    img {
+      margin-top: 5px;
+      height: 200px;
+    }
+  }
+
+  .right-product-info {
+    font-size: 0.7rem;
+  }
+}

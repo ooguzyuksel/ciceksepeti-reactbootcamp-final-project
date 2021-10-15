@@ -9,10 +9,17 @@ function Categories() {
   const categories = useSelector((state) => state.category.categories.data);
   const dispatch = useDispatch();
   const [categoryID, setCategoryID] = useState(null);
+  const [allProducts, setAllProducts] = useState(true);
 
   // Catching Category ID in order to Filter Product by prop drilling
   const categoryIdHandler = (id) => {
     setCategoryID(id);
+    setAllProducts(false);
+  };
+
+  const allProductsHandler = () => {
+    setCategoryID(null);
+    setAllProducts(true);
   };
 
   // Calling all categories once Categories Component Called
@@ -25,6 +32,9 @@ function Categories() {
       <div className="category-container">
         {/* Listing All Categories */}
         <div className="category-wrapper">
+          <button className="category-link" type="submit" onClick={allProductsHandler}>
+            Hepsi
+          </button>
           {categories &&
             categories.map((categoryItem) => (
               <div key={categoryItem.id} className="category-item">
@@ -40,8 +50,8 @@ function Categories() {
         </div>
       </div>
 
-      {/* Products Section with Cards */}
-      <Products categoryID={categoryID} />
+      {/* Products Section with Cards -> prop drilling CategoryID in order to sort selected products that are related with category */}
+      <Products categoryID={categoryID} allProducts={allProducts} />
     </div>
   );
 }
