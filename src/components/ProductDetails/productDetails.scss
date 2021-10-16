@@ -58,8 +58,9 @@
   @include button($darkButtonBlue, $lightButtonBlueFocused);
   min-width: 200px;
 }
-.offer-button-retreive {
+.item-not-sold {
   @include button($retreiveFontOrange, $retreiveBackgroundOrange);
+  cursor: default;
 }
 
 .brand-color-status > label {

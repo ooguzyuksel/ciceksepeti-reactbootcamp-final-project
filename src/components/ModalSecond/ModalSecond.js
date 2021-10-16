@@ -23,7 +23,7 @@ const ModalSecond = forwardRef(({ children }, ref) => {
   if (modalController) {
     return ReactDOM.createPortal(
       <div className="modal-wrapper">
-        <div className="modal-container" onClick={closeModal}>
+        <div className="modal-container">
           <div className="modal-card">
             {/* <div className="white-area-top">
               <span>Teklif Ver</span>

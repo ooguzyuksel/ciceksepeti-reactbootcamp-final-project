@@ -46,6 +46,7 @@ function ProductDetails() {
   const [offerPriceButtonCheck, setOfferPriceButtonCheck] = useState(
     localStorage.getItem(productDetailId, offeredValue)
   );
+  const [soldItemID, setSoldItemID] = useState(false);
 
   // Opening modal from different component to handle resuable modal
   const openModal = () => {
@@ -60,12 +61,17 @@ function ProductDetails() {
 
   // Toastify Handler
   const notifySuccess = () => toast.success("Teklif başarıyla verildi.", { autoClose: 3000 });
+  const notifyPurchaseSuccess = () =>
+    toast.success("Satın alma işlemi başarıyla gerçekleştirildi.", { autoClose: 3000 });
   const notifyRetrieveSuccess = () =>
     toast.success("Teklif başarıyla geri çekildi.", { autoClose: 3000 });
   const notifyError = () => toast.error("Lütfen bir teklif seçiniz.", { autoClose: 2000 });
 
   const openModalSecond = () => {
     modalSecondRef.current.modalSecondOpener();
+  };
+  const closeModalSecond = () => {
+    modalSecondRef.current.modalSecondCloser();
   };
 
   // Radio button value handler
@@ -105,6 +111,12 @@ function ProductDetails() {
     }
   };
   console.log({ getProduct });
+
+  const purchaseHandler = (e) => {
+    e.preventDefault();
+    setSoldItemID(true);
+    notifyPurchaseSuccess();
+  };
   // Fetching asyncroniously id entered data in order to show it Product Details Page
   const getProductData = async () => {
     await axios
@@ -118,7 +130,7 @@ function ProductDetails() {
     getProductData();
   }, [productDetailId]);
 
-  // console.log(getProduct);
+  console.log(getProduct);
   return (
     <div className="home-wrapper">
       <ToastContainer />
@@ -163,7 +175,7 @@ function ProductDetails() {
               </div>
             )}
             <div>
-              {getProduct.isSold && (
+              {!getProduct.isSold && !soldItemID ? (
                 <>
                   <button
                     type="submit"
@@ -177,18 +189,26 @@ function ProductDetails() {
 
                   {/* Purchase Modal */}
                   <ModalSecond ref={modalSecondRef}>
-                    <div className="purchase-container">
+                    <form className="purchase-container">
                       <h3 className="purchase-title">SATIN AL</h3>
                       <p>Satın almak istiyor musunuz ?</p>
                       <div>
-                        <button className="reject">Vazgeç</button>
-                        <button className="accept">Satın Al</button>
+                        <button className="reject" onClick={closeModalSecond}>
+                          Vazgeç
+                        </button>
+                        <button className="accept" type="submit" onClick={purchaseHandler}>
+                          Satın Al
+                        </button>
                       </div>
-                    </div>
+                    </form>
                   </ModalSecond>
                 </>
+              ) : (
+                <button type="submit" className="item-not-sold">
+                  Bu Ürün Satışta Değil
+                </button>
               )}
-              {getProduct.isOfferable && (
+              {!getProduct?.isSold && getProduct?.isOfferable && !soldItemID && (
                 <>
                   {!offerPriceButtonCheck && (
                     <button
