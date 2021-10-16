@@ -30,15 +30,36 @@
 }
 
 .right-product-info {
-  max-width: 400px;
+  max-width: 450px;
+}
+
+.final-offered-price {
+  max-width: 200px;
+  padding: 5px 0;
+  background: $backgroundGray;
+  border-radius: 5px;
+  margin-bottom: 35px;
+  margin-top: -15px;
+  &::before {
+    content: "";
+    padding-left: 10px;
+  }
+  &-subtitle {
+    opacity: 0.3;
+  }
 }
 
 .buy-button {
   @include button($pureWhite, $darkButtonBlue);
+  min-width: 200px;
 }
 
 .offer-button {
   @include button($darkButtonBlue, $lightButtonBlueFocused);
+  min-width: 200px;
+}
+.offer-button-retreive {
+  @include button($retreiveFontOrange, $retreiveBackgroundOrange);
 }
 
 .brand-color-status > label {

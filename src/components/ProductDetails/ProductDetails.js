@@ -1,3 +1,5 @@
+/* eslint-disable no-alert */
+/* eslint-disable radix */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/button-has-type */
 /* eslint-disable dot-notation */
@@ -9,17 +11,46 @@ import { useParams } from "react-router-dom";
 import Navbar from "components/Navbar/Navbar";
 import Modal from "components/Modal/Modal";
 import ModalSecond from "components/ModalSecond/ModalSecond";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "../../../node_modules/axios/index";
+
+// Radio Values as Array Object
+const radioValues = [
+  {
+    id: "twentypercent",
+    value: 0.2,
+    title: "%20'si Kadar Teklif Ver",
+  },
+  {
+    id: "thirtypercent",
+    value: 0.3,
+    title: "%30'u Kadar Teklif Ver",
+  },
+  {
+    id: "fortypercent",
+    value: 0.4,
+    title: "%40'ı Kadar Teklif Ver",
+  },
+];
 
 function ProductDetails() {
   const modalRef = useRef();
   const modalSecondRef = useRef();
   let { productDetailId } = useParams();
   const [getProduct, setGetProduct] = useState({});
+  const [offeredValue, setOfferedValue] = useState(0);
+  const [finalOfferedPrice, setFinalOfferedPrice] = useState(
+    localStorage.getItem(productDetailId, offeredValue)
+  );
+  const [offerPriceButtonCheck, setOfferPriceButtonCheck] = useState(
+    localStorage.getItem(productDetailId, offeredValue)
+  );
 
   // Opening modal from different component to handle resuable modal
   const openModal = () => {
     modalRef.current.modalOpener();
+
     // console.log(modalRef);
   };
   const closeModal = () => {
@@ -27,10 +58,22 @@ function ProductDetails() {
     // console.log(modalRef);
   };
 
+  // Toastify Handler
+  const notifySuccess = () => toast.success("Teklif başarıyla verildi.", { autoClose: 3000 });
+  const notifyRetrieveSuccess = () =>
+    toast.success("Teklif başarıyla geri çekildi.", { autoClose: 3000 });
+  const notifyError = () => toast.error("Lütfen bir teklif seçiniz.", { autoClose: 2000 });
+
   const openModalSecond = () => {
     modalSecondRef.current.modalSecondOpener();
   };
 
+  // Radio button value handler
+  const radioValueHandler = (e) => {
+    setOfferedValue(Number(e.target.value));
+  };
+
+  // Capitalize first letters of the sentence
   const elementCapitalizer = (el1) => {
     let capital = el1?.toString().charAt(0).toUpperCase();
     let rest = el1?.toString().slice(1);
@@ -38,6 +81,30 @@ function ProductDetails() {
     return compose;
   };
 
+  const retreiveHandler = () => {
+    localStorage.removeItem(productDetailId, offeredValue);
+    setOfferPriceButtonCheck(false);
+    notifyRetrieveSuccess();
+    setFinalOfferedPrice(null);
+  };
+
+  // Offer Submit handler with logic " as much as possible :( "
+  const handleOfferSubmit = (e) => {
+    e.preventDefault();
+    if (offeredValue > 0) {
+      setFinalOfferedPrice(offeredValue);
+      localStorage.setItem(productDetailId, offeredValue);
+      notifySuccess();
+      setOfferPriceButtonCheck(true);
+      setTimeout(() => {
+        closeModal();
+        setOfferedValue(0);
+      }, 200);
+    } else {
+      notifyError();
+    }
+  };
+  console.log({ getProduct });
   // Fetching asyncroniously id entered data in order to show it Product Details Page
   const getProductData = async () => {
     await axios
@@ -51,9 +118,10 @@ function ProductDetails() {
     getProductData();
   }, [productDetailId]);
 
-  console.log(getProduct);
+  // console.log(getProduct);
   return (
     <div className="home-wrapper">
+      <ToastContainer />
       <div className="home-container">
         <Navbar />
       </div>
@@ -86,6 +154,14 @@ function ProductDetails() {
               <span>{elementCapitalizer(getProduct?.status?.title)}</span>
             </div>
             <h2>{getProduct.price} TL</h2>
+            {finalOfferedPrice && (
+              <div className="final-offered-price">
+                <span>
+                  <span className="final-offered-price-subtitle"> Verilen Teklif: </span>
+                  <b>{finalOfferedPrice} TL</b>
+                </span>
+              </div>
+            )}
             <div>
               {getProduct.isSold && (
                 <>
@@ -98,6 +174,7 @@ function ProductDetails() {
                   >
                     Satın Al
                   </button>
+
                   {/* Purchase Modal */}
                   <ModalSecond ref={modalSecondRef}>
                     <div className="purchase-container">
@@ -113,15 +190,22 @@ function ProductDetails() {
               )}
               {getProduct.isOfferable && (
                 <>
-                  <button
-                    type="submit"
-                    className="offer-button"
-                    onClick={() => {
-                      openModal();
-                    }}
-                  >
-                    Teklif Ver
-                  </button>
+                  {!offerPriceButtonCheck && (
+                    <button
+                      type="submit"
+                      className="offer-button"
+                      onClick={() => {
+                        openModal();
+                      }}
+                    >
+                      Teklif Ver
+                    </button>
+                  )}
+                  {offerPriceButtonCheck && (
+                    <button type="submit" className="offer-button" onClick={retreiveHandler}>
+                      Teklifi Geri Çek
+                    </button>
+                  )}
                   {/* Offer Modal */}
                   <Modal ref={modalRef}>
                     <form>
@@ -147,32 +231,37 @@ function ProductDetails() {
 
                       {/* Offer Area */}
                       <div>
-                        <div className="offer-radio">
+                        {radioValues.map((radioValue) => (
+                          <div className="offer-radio" key={radioValue.id}>
+                            <input
+                              className="offer-radioButton"
+                              type="radio"
+                              name="offer"
+                              id={radioValue.id}
+                              value={(radioValue.value * getProduct?.price).toFixed(2)}
+                              onClick={radioValueHandler}
+                            />
+                            <label htmlFor={radioValue.id}>{radioValue.title}</label>
+                          </div>
+                        ))}
+                        {/* <div className="offer-input">
                           <input
-                            className="offer-radioButton"
-                            type="radio"
+                            type="number"
                             name="offer"
-                            id="twentypercent"
-                            value={0.2}
+                            id="offeredValue"
+                            placeholder="Teklif Belirle"
+                            onChange={openOfferHandler}
                           />
-                          <label htmlFor="twentypercent">%20'si Kadar Teklif Ver</label>
-                        </div>
-                        <div className="offer-radio">
-                          <input type="radio" name="offer" id="thirtypercent" value={0.3} />
-                          <label htmlFor="thirtypercent">%30'u Kadar Teklif Ver</label>
-                        </div>
-                        <div className="offer-radio">
-                          <input type="radio" name="offer" id="fortypercent" value={0.4} />
-                          <label htmlFor="fortypercent">%40'ı Kadar Teklif Ver</label>
-                        </div>
-                        <div className="offer-input">
-                          <input type="number" name="" id="" placeholder="Teklif Belirle" />
-                        </div>
+                        </div> */}
                       </div>
+
+                      {/* TEST DIV */}
 
                       {/* Offer Verifying Area */}
                       <div className="verify-button-container">
-                        <button type="submit">Onayla</button>
+                        <button type="submit" onClick={handleOfferSubmit}>
+                          Onayla
+                        </button>
                       </div>
                     </form>
                   </Modal>

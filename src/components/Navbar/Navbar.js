@@ -20,11 +20,18 @@ function Navbar({ logoutUser }) {
             <img src={ikincielLogo} alt="İkinciEllogo" />
           </Link>
         </div>
-        <div>
-          {user && <button type="submit">Ürün Ekle</button>}
+        <div className="navbar-button-wrapper">
+          {user && (
+            <button className="login-button" type="submit">
+              <span className="user-icon">
+                <i className="far fa-plus" />
+              </span>{" "}
+              Ürün Ekle
+            </button>
+          )}
           {!user && (
             <button className="login-button" type="submit" onClick={loginHandler}>
-              <span className="plus-icon">
+              <span className="user-icon">
                 <i className="far fa-user" />
               </span>{" "}
               Giriş Yap
@@ -33,7 +40,12 @@ function Navbar({ logoutUser }) {
           {user && (
             <>
               {" "}
-              <button type="submit">Hesabım</button>
+              <button className="login-button" type="submit">
+                <span className="user-icon">
+                  <i className="far fa-user" />
+                </span>{" "}
+                Hesabım
+              </button>
               <button type="submit" onClick={logoutUser}>
                 Çıkış Yap
               </button>

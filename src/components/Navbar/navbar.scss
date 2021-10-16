@@ -26,7 +26,24 @@
   @include button($darkButtonBlue, $lightButtonBlueFocused, 5px 10px);
 }
 
-.plus-icon {
+.user-icon {
   font-size: 1.2rem;
   padding-right: 15px;
+  display: inline-block;
+}
+
+.navbar-button-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.offer-input {
+  position: relative;
+  &::before {
+    content: "TL";
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    color: rgba(0, 0, 0, 0.5);
+  }
 }
