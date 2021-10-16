@@ -1,6 +1,7 @@
+/* eslint-disable no-alert */
 /* eslint-disable prefer-const */
 import "../Signup/signup.scss";
-
+import "./login.scss";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginInitiate } from "redux/actions/actions";
@@ -26,7 +27,13 @@ function Login() {
   // onSubmitHandler will submit taken data from input and Redirect to HOME Page
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    dispatch(loginInitiate(mail, password));
+    if (mail.length === 0 || password.length === 0) {
+      alert("Mail veya Parola Boş Olamaz.");
+    } else if (password.length >= 8 && password.length <= 20) {
+      dispatch(loginInitiate(mail, password));
+    } else {
+      alert("Parola 8 Karakterden uzun , 20 Karakterden kısa olmalıdır.");
+    }
   };
 
   // this is going to return entered value into input
@@ -46,7 +53,9 @@ function Login() {
           <img src={registerGirl} alt="signup-girl" className="signup__image" />
           {/* Right Side - Input Form */}
           <div className="signup-form-wrapper">
-            <img src={ikincielLogo} alt="ikincielLogo" />
+            <Link to="/">
+              <img src={ikincielLogo} alt="ikincielLogo" />{" "}
+            </Link>
 
             <form className="signup__form">
               <div className="signup__form__topDiv">

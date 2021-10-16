@@ -4,7 +4,7 @@
 .product-info-wrapper {
   display: flex;
   justify-content: center;
-  height: 88vh;
+  min-height: 88vh;
 }
 .product-info-container {
   display: flex;
@@ -47,6 +47,11 @@
 }
 
 // Responsivenes
+@media only screen and (max-width: 1033px) {
+  .left-product-cover {
+    margin-top: 25px;
+  }
+}
 @media only screen and (max-width: 600px) {
   .product-info-container {
     display: flex;
@@ -64,5 +69,6 @@
 
   .right-product-info {
     font-size: 0.7rem;
+    margin: 0 25px;
   }
 }

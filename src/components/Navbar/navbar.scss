@@ -1,4 +1,5 @@
 @import "../../scss/variables";
+@import "../../scss/buttons";
 
 .fluid-container {
   height: 80px;
@@ -17,4 +18,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.login-button {
+  display: flex;
+  align-items: center;
+  @include button($darkButtonBlue, $lightButtonBlueFocused, 5px 10px);
+}
+
+.plus-icon {
+  font-size: 1.2rem;
+  padding-right: 15px;
 }

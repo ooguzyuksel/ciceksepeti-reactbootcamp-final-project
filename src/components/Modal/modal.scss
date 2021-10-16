@@ -1,0 +1,125 @@
+@import "../../scss/variables";
+@import "../../scss/buttons";
+
+.modal-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: rgba($modalBackgroundBlue, 0.7);
+}
+
+.modal-card {
+  padding: 25px;
+  background: $pureWhite;
+  border-radius: 5px;
+}
+
+.white-area-top {
+  position: relative;
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+.close-modal {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 1.5rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.purchase-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .reject {
+    @include button($darkButtonBlue, $lightButtonBlueFocused, 10px 40px);
+  }
+
+  .accept {
+    @include button($pureWhite, $darkButtonBlue, 10px 40px);
+  }
+}
+
+.offer-wrapper {
+  padding: 5px 15px;
+  margin: 25px 0;
+  border-radius: 10px;
+  background: $lightButtonBlueFocused;
+}
+.offer-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.offer-info-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.offer-info-image {
+  width: 50px;
+  border-radius: 10px;
+}
+
+.offer-info-detail {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  margin-left: 15px;
+}
+
+.offer-info-price {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.offer-radio {
+  border: 1px solid $backgroundGray;
+  padding: 10px 5px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+}
+
+.offer-input {
+  border: 1px solid $backgroundGray;
+  margin-bottom: 5px;
+  overflow: hidden;
+  border-radius: 10px;
+
+  input {
+    width: 110%;
+    border: none;
+    padding: 15px 0 15px 10px;
+    background: $backgroundGray;
+    border-radius: 10px;
+
+    &:focus {
+      border: none;
+      outline: none;
+    }
+  }
+}
+
+.verify-button-container {
+  width: 100%;
+  text-align: center;
+  button {
+    margin-top: 15px;
+    @include button($pureWhite, $darkButtonBlue, 10px 100px);
+  }
+}

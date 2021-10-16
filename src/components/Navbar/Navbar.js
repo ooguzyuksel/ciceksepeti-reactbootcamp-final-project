@@ -21,9 +21,12 @@ function Navbar({ logoutUser }) {
           </Link>
         </div>
         <div>
-          <button type="submit">Ürün Ekle</button>
+          {user && <button type="submit">Ürün Ekle</button>}
           {!user && (
-            <button type="submit" onClick={loginHandler}>
+            <button className="login-button" type="submit" onClick={loginHandler}>
+              <span className="plus-icon">
+                <i className="far fa-user" />
+              </span>{" "}
               Giriş Yap
             </button>
           )}

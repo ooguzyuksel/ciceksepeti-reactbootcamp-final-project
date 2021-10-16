@@ -1,5 +1,5 @@
-@mixin button($fontColor, $bgColor) {
-  padding: 8px 50px;
+@mixin button($fontColor, $bgColor, $paddingScale: 8px 50px) {
+  padding: $paddingScale;
   color: $fontColor;
   background: $bgColor;
   border: none;
