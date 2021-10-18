@@ -27,6 +27,7 @@ function ProductDetails() {
   let { productDetailId } = useParams();
   const [getProduct, setGetProduct] = useState({});
   const [offeredValue, setOfferedValue] = useState(0);
+  const [postError, setPostError] = useState(null);
   const [finalOfferedPrice, setFinalOfferedPrice] = useState(
     localStorage.getItem(productDetailId, offeredValue)
   );
@@ -84,7 +85,7 @@ function ProductDetails() {
     localStorage.removeItem(productDetailId, offeredValue);
     setOfferPriceButtonCheck(false);
     notifyRetrieveSuccess();
-    // setFinalOfferedPrice(null);
+    setFinalOfferedPrice(null);
   };
 
   // OFFER - POST REQUEST"
@@ -269,7 +270,7 @@ function ProductDetails() {
                               type="radio"
                               name="offer"
                               id={radioValue.id}
-                              value={radioValue.value * getProduct?.price.toFixed(2)}
+                              value={radioValue.value * getProduct?.price?.toFixed(0)}
                               onClick={radioValueHandler}
                             />
                             <label htmlFor={radioValue.id}>{radioValue.title}</label>

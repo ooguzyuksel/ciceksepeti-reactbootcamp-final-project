@@ -26,11 +26,11 @@ function Navbar({ logoutUser }) {
         </div>
         <div className="navbar-button-wrapper">
           {user && (
-            <Link to="/addproduct" className="login-button" type="submit">
+            <Link to="/addproduct" className="login-button plus-icon-button" type="submit">
               <span className="user-icon">
                 <i className="far fa-plus" />
               </span>{" "}
-              Ürün Ekle
+              <span className="add-product-span">Ürün Ekle</span>
             </Link>
           )}
           {!user && (
@@ -55,9 +55,9 @@ function Navbar({ logoutUser }) {
                 </span>{" "}
                 Hesabım
               </Link>
-              <button type="submit" onClick={logoutUser}>
+              {/* <button type="submit" onClick={logoutUser}>
                 Çıkış Yap
-              </button>
+              </button> */}
             </>
           )}
         </div>
