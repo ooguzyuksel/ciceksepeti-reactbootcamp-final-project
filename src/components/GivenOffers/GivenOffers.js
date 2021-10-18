@@ -12,7 +12,7 @@ function GivenOffers() {
     dispatch(getGivenOffers());
   }, []);
 
-  console.log(givenOfferItems);
+  console.log("TEKLİF VERDİKLERİM:", givenOfferItems);
   return (
     <div className="given-offers-wrapper">
       {givenOfferItems?.map((offeredItem) => (
@@ -30,8 +30,13 @@ function GivenOffers() {
           </div>
           <div className="right-side">
             <div className="given-offer-result">
-              <button>Satın Al</button>
-              <span>Onaylandı</span>
+              {offeredItem?.isSold === "sold" && <span className="offer-rejected">Reddedildi</span>}
+              {!offeredItem?.isSold && (
+                <div>
+                  <button>Satın Al</button>
+                  <span className="offer-accepted">Onaylandı</span>
+                </div>
+              )}
             </div>
           </div>
         </div>

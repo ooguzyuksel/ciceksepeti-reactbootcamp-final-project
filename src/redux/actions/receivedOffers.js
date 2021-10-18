@@ -14,7 +14,7 @@ const getReceivedOffersSuccess = (data) => ({
 export const getReceivedOffers = () => async (dispatch) => {
   dispatch(getReceivedOffersPending());
   return axios
-    .get("http://bootcampapi.techcs.io/api/fe/v1/account/received-offers", {
+    .get("https://bootcampapi.techcs.io/api/fe/v1/account/received-offers", {
       headers: { Authorization: `Bearer ${userTokenID}` },
     })
     .then((data) => dispatch(getReceivedOffersSuccess(data)))

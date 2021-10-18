@@ -26,7 +26,7 @@ function Navbar({ logoutUser }) {
         </div>
         <div className="navbar-button-wrapper">
           {user && (
-            <Link to="/addProduct" className="login-button" type="submit">
+            <Link to="/addproduct" className="login-button" type="submit">
               <span className="user-icon">
                 <i className="far fa-plus" />
               </span>{" "}

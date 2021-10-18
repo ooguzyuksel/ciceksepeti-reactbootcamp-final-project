@@ -23,6 +23,7 @@ function Products({ categoryID, allProducts }) {
     // setClickedProductID(itemProductId);
     {
       user && history.push(`/product/${itemProductId}`);
+      localStorage.setItem("productId", itemProductId);
     }
     {
       !user && history.push("/signup");

@@ -2,10 +2,12 @@
 /* eslint-disable prefer-const */
 import "../Signup/signup.scss";
 import "./login.scss";
+import "react-toastify/dist/ReactToastify.css";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginInitiate } from "redux/actions/actions";
 import { useHistory, Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import registerGirl from "../../images/registerGirl.png";
 import ikincielLogo from "../../images/ikincielLogo.svg";
 
@@ -14,6 +16,8 @@ function Login() {
   const [password, setPassword] = useState("");
   const history = useHistory();
   let dispatch = useDispatch();
+
+  const notifyError = (text) => toast.error(text, { autoClose: 2000 });
 
   let { user, error } = useSelector((state) => state.auth);
   useEffect(() => {
@@ -31,11 +35,11 @@ function Login() {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     if (mail.length === 0 || password.length === 0) {
-      alert("Mail veya Parola Boş Olamaz.");
+      notifyError("Mail veya Parola Boş Olamaz.");
     } else if (password.length >= 8 && password.length <= 20) {
       dispatch(loginInitiate(mail, password));
     } else {
-      alert("Parola 8 Karakterden uzun , 20 Karakterden kısa olmalıdır.");
+      notifyError("Parola 8 Karakterden uzun , 20 Karakterden kısa olmalıdır.");
     }
   };
 
@@ -97,6 +101,7 @@ function Login() {
             </form>
           </div>
         </div>
+        <ToastContainer />
       </div>
     </>
   );

@@ -60,3 +60,11 @@
     font-weight: 100;
   }
 }
+
+.offer-rejected {
+  color: $rejectionRed;
+}
+
+.offer-accepted {
+  color: $darkButtonBlue;
+}

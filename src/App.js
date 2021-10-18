@@ -7,6 +7,7 @@ import ProductDetails from "components/ProductDetails/ProductDetails";
 import Signup from "components/Signup/Signup";
 import React from "react";
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
+import AddProduct from "components/AddProduct/AddProduct";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/myaccount" component={MyAccount} />
         <Route exact path="/myaccount/gottenoffers" component={GottenOffers} />
         <Route exact path="/myaccount/givenoffers" component={GivenOffers} />
+        <Route path="/addproduct" component={AddProduct} />
       </Switch>
     </Router>
   );

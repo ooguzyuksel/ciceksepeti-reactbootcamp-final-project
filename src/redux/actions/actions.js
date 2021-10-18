@@ -43,7 +43,7 @@ export const loginInitiate = (email, password) => {
   return function (dispatch) {
     dispatch(loginStart());
     axios
-      .post("http://bootcampapi.techcs.io/api/fe/v1/authorization/signin", { email, password })
+      .post("https://bootcampapi.techcs.io/api/fe/v1/authorization/signin", { email, password })
       .then((response) => {
         console.log("response", response);
         dispatch(loginSuccess(response.data.access_token, email));

@@ -1,0 +1,125 @@
+@import "../../scss/variables";
+@import "../../scss/buttons";
+
+.addproduct-wrapper {
+  background: $backgroundGray;
+  min-height: 100vh;
+  color: $fontBlack;
+}
+
+.addproduct-container {
+  width: 100%;
+}
+
+.addproduct-area {
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 10px;
+  background: $pureWhite;
+  max-width: 75vw;
+  border-radius: 10px;
+  min-height: 65vh;
+  display: flex;
+}
+
+.left-area {
+  flex: 6;
+  width: 100%;
+  border-right: 1px solid rgba($backgroundGray, 1);
+  padding: 0 30px 0 15px;
+}
+
+.right-area {
+  flex: 4;
+  width: 100%;
+  padding: 0 15px 0 30px;
+}
+
+.sub-container {
+  display: flex;
+  flex-direction: column;
+
+  &-secondary {
+    display: flex;
+    flex-direction: column;
+    max-width: 45%;
+    width: 100%;
+  }
+}
+.addproduct-inputs {
+  border: none;
+  background: $lightButtonGrayIdle;
+  padding: 10px 0 10px 10px;
+  border-radius: 8px;
+
+  &:not(first-child) {
+    margin-top: 10px;
+  }
+
+  &::placeholder {
+    padding-left: 5px;
+  }
+
+  &:focus {
+    border: 1px solid $categoryClickedBlue;
+    box-shadow: 0 0 3px $categoryClickedBlue;
+    outline-offset: 0px;
+    outline: none;
+    background: $lightButtonBlueFocused;
+  }
+}
+
+.price-input {
+  margin-bottom: 15px;
+}
+.addproduct-selects {
+  border: none;
+  background: $lightButtonGrayIdle;
+  padding: 10px 0 10px 10px;
+  border-radius: 8px;
+
+  &::placeholder {
+    padding-left: 5px;
+  }
+}
+
+.sub-container-multiple {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  width: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+  .sub-container-secondary {
+    max-width: 100%;
+  }
+}
+
+.addproduct-labels {
+  margin: 10px 0 5px 2px;
+}
+
+.textarea-input {
+  resize: none;
+}
+
+// Right Area
+
+.right-area-container {
+  border: 2px dashed rgba($backgroundGray, 1);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+.upload-button {
+  @include button($buttonFadedBlack, $lightButtonGrayIdle, 15px 50px);
+  border-radius: 50px;
+  font-weight: 100;
+  margin-bottom: 20px;
+}

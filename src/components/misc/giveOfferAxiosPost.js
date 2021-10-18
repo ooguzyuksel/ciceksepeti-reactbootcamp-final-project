@@ -3,7 +3,7 @@ import axios from "axios";
 export const postOfferedValue = async (productDetailId, config, price) => {
   await axios
     .post(
-      `http://bootcampapi.techcs.io/api/fe/v1/product/offer/${productDetailId}`,
+      `https://bootcampapi.techcs.io/api/fe/v1/product/offer/${productDetailId}`,
       {
         offeredPrice: price,
       },

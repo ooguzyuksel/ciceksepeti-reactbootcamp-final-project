@@ -13,13 +13,15 @@ import Modal from "components/Modal/Modal";
 import ModalSecond from "components/ModalSecond/ModalSecond";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useSelector } from "react-redux";
-import axios from "../../../node_modules/axios/index";
+import { useSelector, useDispatch } from "react-redux";
+import { getPurchasedItem } from "redux/actions/purchaseActions";
 import { radioValues } from "../misc/radioButtonValues";
 import { elementCapitalizer } from "../misc/firstLetterCapitalizer";
+import axios from "../../../node_modules/axios/index";
 
 function ProductDetails() {
   const userTokenId = useSelector((state) => state.auth.user);
+  const puchasedItem = useSelector((state) => state);
   const modalRef = useRef();
   const modalSecondRef = useRef();
   let { productDetailId } = useParams();
@@ -32,8 +34,10 @@ function ProductDetails() {
     localStorage.getItem(productDetailId, offeredValue)
   );
   const [soldItemID, setSoldItemID] = useState(false);
+  const dispatch = useDispatch();
 
-  console.log({ productDetailId });
+  console.log("Purchased Item: ", { puchasedItem });
+  console.log("Product ID:", productDetailId);
   // MODALS - Opening modal from different component to handle resuable modal
   const openModal = () => {
     modalRef.current.modalOpener();
@@ -80,7 +84,7 @@ function ProductDetails() {
     localStorage.removeItem(productDetailId, offeredValue);
     setOfferPriceButtonCheck(false);
     notifyRetrieveSuccess();
-    setFinalOfferedPrice(null);
+    // setFinalOfferedPrice(null);
   };
 
   // OFFER - POST REQUEST"
@@ -90,7 +94,7 @@ function ProductDetails() {
   const mainPosOfferedValue = async () => {
     await axios
       .post(
-        `http://bootcampapi.techcs.io/api/fe/v1/product/offer/${productDetailId}`,
+        `https://bootcampapi.techcs.io/api/fe/v1/product/offer/${productDetailId}`,
         {
           offeredPrice: offeredValue,
         },
@@ -123,11 +127,12 @@ function ProductDetails() {
     e.preventDefault();
     setSoldItemID(true);
     notifyPurchaseSuccess();
+    dispatch(getPurchasedItem());
   };
   // Fetching asyncroniously id entered data in order to show it Product Details Page
   const getProductData = async () => {
     await axios
-      .get(`http://bootcampapi.techcs.io/api/fe/v1/product/${productDetailId}`)
+      .get(`https://bootcampapi.techcs.io/api/fe/v1/product/${productDetailId}`)
       .then((data) => setGetProduct(data.data))
       .catch((error) => console.log(error));
   };
