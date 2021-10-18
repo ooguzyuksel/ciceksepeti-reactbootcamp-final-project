@@ -13,28 +13,13 @@ import Modal from "components/Modal/Modal";
 import ModalSecond from "components/ModalSecond/ModalSecond";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
 import axios from "../../../node_modules/axios/index";
-
-// Radio Values as Array Object
-const radioValues = [
-  {
-    id: "twentypercent",
-    value: 0.2,
-    title: "%20'si Kadar Teklif Ver",
-  },
-  {
-    id: "thirtypercent",
-    value: 0.3,
-    title: "%30'u Kadar Teklif Ver",
-  },
-  {
-    id: "fortypercent",
-    value: 0.4,
-    title: "%40'ı Kadar Teklif Ver",
-  },
-];
+import { radioValues } from "../misc/radioButtonValues";
+import { elementCapitalizer } from "../misc/firstLetterCapitalizer";
 
 function ProductDetails() {
+  const userTokenId = useSelector((state) => state.auth.user);
   const modalRef = useRef();
   const modalSecondRef = useRef();
   let { productDetailId } = useParams();
@@ -48,25 +33,14 @@ function ProductDetails() {
   );
   const [soldItemID, setSoldItemID] = useState(false);
 
-  // Opening modal from different component to handle resuable modal
+  console.log({ productDetailId });
+  // MODALS - Opening modal from different component to handle resuable modal
   const openModal = () => {
     modalRef.current.modalOpener();
-
-    // console.log(modalRef);
   };
   const closeModal = () => {
     modalRef.current.modalCloser();
-    // console.log(modalRef);
   };
-
-  // Toastify Handler
-  const notifySuccess = () => toast.success("Teklif başarıyla verildi.", { autoClose: 3000 });
-  const notifyPurchaseSuccess = () =>
-    toast.success("Satın alma işlemi başarıyla gerçekleştirildi.", { autoClose: 3000 });
-  const notifyRetrieveSuccess = () =>
-    toast.success("Teklif başarıyla geri çekildi.", { autoClose: 3000 });
-  const notifyError = () => toast.error("Lütfen bir teklif seçiniz.", { autoClose: 2000 });
-
   const openModalSecond = () => {
     modalSecondRef.current.modalSecondOpener();
   };
@@ -74,19 +48,34 @@ function ProductDetails() {
     modalSecondRef.current.modalSecondCloser();
   };
 
+  // TOASTIFY
+  const notifySuccess = () => toast.success("Teklif başarıyla verildi.", { autoClose: 3000 });
+  const notifyPurchaseSuccess = () =>
+    toast.success("Satın alma işlemi başarıyla gerçekleştirildi.", { autoClose: 3000 });
+  const notifyRetrieveSuccess = () =>
+    toast.success("Teklif başarıyla geri çekildi.", { autoClose: 3000 });
+  const notifyError = () => toast.error("Lütfen bir teklif seçiniz.", { autoClose: 2000 });
+
   // Radio button value handler
   const radioValueHandler = (e) => {
     setOfferedValue(Number(e.target.value));
   };
 
-  // Capitalize first letters of the sentence
-  const elementCapitalizer = (el1) => {
-    let capital = el1?.toString().charAt(0).toUpperCase();
-    let rest = el1?.toString().slice(1);
-    let compose = capital?.concat(rest);
-    return compose;
+  // Buraya tekrar bakılacak. Şu an teklifi geri çek çalışmıyor.
+  /*   const configForPurchase = {
+    headers: { Authorization: `Bearer ${userTokenId}` },
   };
+  const purchaseHandlerAxiosPut = async () => {
+    await axios
+      .put(
+        `http://bootcampapi.techcs.io/api/fe/v1/product/purchase/${productDetailId}`,
+        configForPurchase
+      )
+      .then((response) => console.log("Purchase Response: ", response))
+      .catch((err) => console.log(err));
+  }; */
 
+  // Retreive offer
   const retreiveHandler = () => {
     localStorage.removeItem(productDetailId, offeredValue);
     setOfferPriceButtonCheck(false);
@@ -94,10 +83,27 @@ function ProductDetails() {
     setFinalOfferedPrice(null);
   };
 
-  // Offer Submit handler with logic " as much as possible :( "
+  // OFFER - POST REQUEST"
+  const config = {
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${userTokenId}` },
+  };
+  const mainPosOfferedValue = async () => {
+    await axios
+      .post(
+        `http://bootcampapi.techcs.io/api/fe/v1/product/offer/${productDetailId}`,
+        {
+          offeredPrice: offeredValue,
+        },
+        config
+      )
+      .then((response) => console.log("Give Offer Response: ", response))
+      .catch((err) => setPostError(err));
+  };
+
   const handleOfferSubmit = (e) => {
     e.preventDefault();
     if (offeredValue > 0) {
+      mainPosOfferedValue();
       setFinalOfferedPrice(offeredValue);
       localStorage.setItem(productDetailId, offeredValue);
       notifySuccess();
@@ -110,7 +116,8 @@ function ProductDetails() {
       notifyError();
     }
   };
-  console.log({ getProduct });
+  // console.log({ getProduct });
+  // console.log({ getOfferedReduxFinalPrice });
 
   const purchaseHandler = (e) => {
     e.preventDefault();
@@ -130,7 +137,6 @@ function ProductDetails() {
     getProductData();
   }, [productDetailId]);
 
-  console.log(getProduct);
   return (
     <div className="home-wrapper">
       <ToastContainer />
@@ -258,7 +264,7 @@ function ProductDetails() {
                               type="radio"
                               name="offer"
                               id={radioValue.id}
-                              value={(radioValue.value * getProduct?.price).toFixed(2)}
+                              value={radioValue.value * getProduct?.price.toFixed(2)}
                               onClick={radioValueHandler}
                             />
                             <label htmlFor={radioValue.id}>{radioValue.title}</label>

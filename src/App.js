@@ -1,5 +1,8 @@
+import GivenOffers from "components/GivenOffers/GivenOffers";
+import GottenOffers from "components/ReceivedOffers/ReceivedOffers";
 import Home from "components/Home/Home";
 import Login from "components/Login/Login";
+import MyAccount from "components/MyAccount/MyAccount";
 import ProductDetails from "components/ProductDetails/ProductDetails";
 import Signup from "components/Signup/Signup";
 import React from "react";
@@ -13,6 +16,9 @@ function App() {
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
         <Route path="/product/:productDetailId" component={ProductDetails} />
+        <Route path="/myaccount" component={MyAccount} />
+        <Route exact path="/myaccount/gottenoffers" component={GottenOffers} />
+        <Route exact path="/myaccount/givenoffers" component={GivenOffers} />
       </Switch>
     </Router>
   );

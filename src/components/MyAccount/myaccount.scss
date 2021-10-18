@@ -1,0 +1,66 @@
+@import "../../scss/variables";
+@import "../../scss/buttons";
+
+.myaccount-wrapper {
+  background: $backgroundGray;
+  min-height: 100vh;
+}
+
+.mail-adress-container,
+.order-menu-wrapper {
+  width: 100%;
+}
+.mail-adress-area {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  height: 50px;
+  background: $pureWhite;
+  max-width: 75vw;
+  border-radius: 10px;
+
+  & i,
+  h3 {
+    margin-left: 15px;
+  }
+
+  & i {
+    padding: 5px;
+    border: 1px solid $backgroundGray;
+    border-radius: 50%;
+  }
+}
+
+.order-menu-container {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 20px;
+  background: $pureWhite;
+  max-width: 75vw;
+  border-radius: 10px;
+}
+
+.order-menu-links {
+  width: 100%;
+  padding-top: 5px;
+  border-bottom: 1px solid rgba($categoryBlack, 0.2);
+  padding-bottom: 5px;
+}
+
+.order-menu-link {
+  margin-left: 15px;
+  text-decoration: none;
+  color: $categoryBlack;
+  border: none;
+  background-color: transparent;
+
+  &:focus {
+    color: $categoryClickedBlue;
+    border-bottom: 2px solid $categoryClickedBlue;
+    padding-bottom: 5px;
+  }
+}

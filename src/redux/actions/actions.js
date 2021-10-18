@@ -6,9 +6,10 @@ const loginStart = () => ({
   type: types.LOGIN_START,
 });
 
-const loginSuccess = (token) => ({
+const loginSuccess = (token, userMailAdress) => ({
   type: types.LOGIN_SUCCESS,
   payload: token,
+  userMailAdress,
 });
 
 const loginFail = (error) => ({
@@ -21,9 +22,10 @@ const registerStart = () => ({
   type: types.REGISTER_START,
 });
 
-const registerSuccess = (token) => ({
+const registerSuccess = (token, userMailAdress) => ({
   type: types.REGISTER_SUCCESS,
   payload: token,
+  userMailAdress,
 });
 
 const registerFail = (error) => ({
@@ -41,10 +43,10 @@ export const loginInitiate = (email, password) => {
   return function (dispatch) {
     dispatch(loginStart());
     axios
-      .post("/authorization/signin", { email, password })
+      .post("http://bootcampapi.techcs.io/api/fe/v1/authorization/signin", { email, password })
       .then((response) => {
         console.log("response", response);
-        dispatch(loginSuccess(response.data.access_token));
+        dispatch(loginSuccess(response.data.access_token, email));
       })
       .catch((err) => {
         console.log("error: ", err);
@@ -58,10 +60,10 @@ export const registerInitiate = (email, password) => {
   return function (dispatch) {
     dispatch(registerStart());
     axios
-      .post("/authorization/signup", { email, password })
+      .post("http://bootcampapi.techcs.io/api/fe/v1/authorization/signup", { email, password })
       .then((response) => {
         console.log("response", response);
-        dispatch(registerSuccess(response.data.access_token));
+        dispatch(registerSuccess(response.data.access_token, email));
       })
       .catch((err) => {
         console.log("error: ", err);

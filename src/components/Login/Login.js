@@ -20,6 +20,9 @@ function Login() {
     {
       user && history.push("/");
     }
+    {
+      user && localStorage.setItem("loggedUserKey", user);
+    }
     console.log({ user });
     console.log({ error });
   }, [user]);

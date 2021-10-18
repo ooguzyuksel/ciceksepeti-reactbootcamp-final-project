@@ -21,6 +21,7 @@
 }
 
 .login-button {
+  text-decoration: none;
   display: flex;
   align-items: center;
   @include button($darkButtonBlue, $lightButtonBlueFocused, 5px 10px);

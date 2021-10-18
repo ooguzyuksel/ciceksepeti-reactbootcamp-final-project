@@ -19,6 +19,7 @@ function Home() {
     e.preventDefault();
     dispatch(logoutInitiate());
     history.push("/");
+    localStorage.removeItem("loggedUserKey");
   };
 
   // eslint-disable-next-line prettier/prettier

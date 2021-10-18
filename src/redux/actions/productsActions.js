@@ -13,7 +13,7 @@ const getProductsSuccess = (data) => ({
 export const getProducts = () => async (dispatch) => {
   dispatch(getProductsPending());
   return axios
-    .get("/product/all")
+    .get("http://bootcampapi.techcs.io/api/fe/v1/product/all")
     .then((data) => dispatch(getProductsSuccess(data)))
     .catch((error) => console.log("Products Error", error));
 };

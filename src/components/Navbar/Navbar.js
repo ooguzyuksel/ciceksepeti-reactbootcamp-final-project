@@ -12,6 +12,10 @@ function Navbar({ logoutUser }) {
   const loginHandler = () => {
     history.push("/login");
   };
+
+  const userToLocalStorage = () => {
+    localStorage.setItem("loggedUserKey", user);
+  };
   return (
     <div className="fluid-container">
       <div className="navbar-container">
@@ -22,12 +26,12 @@ function Navbar({ logoutUser }) {
         </div>
         <div className="navbar-button-wrapper">
           {user && (
-            <button className="login-button" type="submit">
+            <Link to="/addProduct" className="login-button" type="submit">
               <span className="user-icon">
                 <i className="far fa-plus" />
               </span>{" "}
               Ürün Ekle
-            </button>
+            </Link>
           )}
           {!user && (
             <button className="login-button" type="submit" onClick={loginHandler}>
@@ -40,12 +44,17 @@ function Navbar({ logoutUser }) {
           {user && (
             <>
               {" "}
-              <button className="login-button" type="submit">
+              <Link
+                to="/myaccount"
+                className="login-button"
+                type="submit"
+                onClick={userToLocalStorage}
+              >
                 <span className="user-icon">
                   <i className="far fa-user" />
                 </span>{" "}
                 Hesabım
-              </button>
+              </Link>
               <button type="submit" onClick={logoutUser}>
                 Çıkış Yap
               </button>

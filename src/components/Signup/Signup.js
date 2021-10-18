@@ -20,6 +20,9 @@ function Signup() {
     {
       user && history.push("/");
     }
+    {
+      user && localStorage.setItem("loggedUserKey", user);
+    }
   }, [user]);
 
   // dispatch mail and password to register

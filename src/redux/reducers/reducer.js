@@ -4,6 +4,7 @@ const initialState = {
   user: null,
   loading: false,
   error: null,
+  userMail: null,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -20,6 +21,7 @@ const authReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         user: action.payload,
+        userMail: action.userMailAdress,
       };
     case types.LOGIN_FAIL:
     case types.REGISTER_FAIL:
@@ -37,5 +39,4 @@ const authReducer = (state = initialState, action) => {
       return state;
   }
 };
-
 export default authReducer;

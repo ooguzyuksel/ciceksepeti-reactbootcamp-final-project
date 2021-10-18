@@ -2,8 +2,6 @@
   "name": "ciceksepeti-react-bootcamp-final-project1",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://bootcampapi.techcs.io/api/fe/v1",
-  "homepage": "http://localhost:3000",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",

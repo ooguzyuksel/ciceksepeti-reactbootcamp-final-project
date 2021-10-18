@@ -12,7 +12,7 @@ const getCategorySuccess = (data) => ({
 export const getCategories = () => async (dispatch) => {
   dispatch(getCategoryPending());
   return axios
-    .get("/detail/category/all")
+    .get("http://bootcampapi.techcs.io/api/fe/v1/detail/category/all")
     .then((data) => dispatch(getCategorySuccess(data)))
     .catch((error) => console.log("Category Error:", error));
 };
