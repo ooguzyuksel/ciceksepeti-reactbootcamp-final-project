@@ -3,6 +3,7 @@
 .home-wrapper {
   width: 100vw;
   background: $backgroundGray;
+  min-height: 100vh;
 }
 
 .banner-container {
@@ -15,4 +16,5 @@
 
 .banner-image {
   width: 80vw;
+  border-radius: 8px;
 }

@@ -52,3 +52,29 @@
   height: 297px;
   border-radius: 10px;
 }
+
+@media only screen and (max-width: 600px) {
+  .card-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .card-container {
+    max-width: 175px;
+    max-height: 275px;
+    font-size: 0.6rem;
+    padding: 15px 0;
+  }
+
+  .card-image {
+    max-width: 175px;
+  }
+
+  .card-product-informartion {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

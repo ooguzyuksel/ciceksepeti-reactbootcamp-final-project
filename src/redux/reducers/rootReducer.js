@@ -9,6 +9,9 @@ import giveProductOfferReducer from "./giveProductOfferReducer";
 import getGivenOffersReducer from "./givenOfferReducer";
 import getReceivedOffersReducer from "./receivedOfferReducer";
 import getPurchasedItemsReducer from "./purchaseReducer";
+import getStatusReducer from "./getStatusReducer";
+import getBrandsReducer from "./getBrandsReducer";
+import getColorsReducer from "./getColorsReducer";
 
 const persistConfig = {
   key: "root",
@@ -24,6 +27,9 @@ const rootReducer = combineReducers({
   givenOffers: getGivenOffersReducer,
   receivedOffers: getReceivedOffersReducer,
   purchaseItem: getPurchasedItemsReducer,
+  itemStatusses: getStatusReducer,
+  brands: getBrandsReducer,
+  colors: getColorsReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);

@@ -1,5 +1,5 @@
 /* eslint-disable react/button-has-type */
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getGivenOffers } from "../../redux/actions/givenOffers";
 import "./givenoffers.scss";

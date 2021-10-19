@@ -60,7 +60,7 @@ export const registerInitiate = (email, password) => {
   return function (dispatch) {
     dispatch(registerStart());
     axios
-      .post("http://bootcampapi.techcs.io/api/fe/v1/authorization/signup", { email, password })
+      .post("https://bootcampapi.techcs.io/api/fe/v1/authorization/signup", { email, password })
       .then((response) => {
         console.log("response", response);
         dispatch(registerSuccess(response.data.access_token, email));

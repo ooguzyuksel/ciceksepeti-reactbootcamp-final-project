@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import "./myaccount.scss";
 import { useSelector } from "react-redux";
 import Navbar from "components/Navbar/Navbar";
-import { useRouteMatch, Link } from "react-router-dom";
+import { useRouteMatch, Link, Redirect } from "react-router-dom";
 import ReceivedOffers from "components/ReceivedOffers/ReceivedOffers";
 import GivenOffers from "components/GivenOffers/GivenOffers";
+import Login from "components/Login/Login";
 
 function MyAccount() {
   const user = useSelector((state) => state.auth.user);
@@ -57,12 +58,7 @@ function MyAccount() {
           {/* <OrderedItems /> */}
         </div>
       )}
-      {!user && (
-        <div>
-          <h1>Bu sayfayı görüntüleyebilmek için lütfen giriş yapın.</h1>
-          <Link to="/login">Giriş sayfına gitmek için tıklayın</Link>
-        </div>
-      )}
+      {!user && <Redirect to="/login" />}
     </>
   );
 }
