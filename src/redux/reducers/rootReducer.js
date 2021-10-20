@@ -12,6 +12,7 @@ import getPurchasedItemsReducer from "./purchaseReducer";
 import getStatusReducer from "./getStatusReducer";
 import getBrandsReducer from "./getBrandsReducer";
 import getColorsReducer from "./getColorsReducer";
+import addNewProductReducer from "./addNewProductReducer";
 
 const persistConfig = {
   key: "root",
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   itemStatusses: getStatusReducer,
   brands: getBrandsReducer,
   colors: getColorsReducer,
+  addProduct: addNewProductReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);

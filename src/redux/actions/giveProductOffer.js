@@ -23,7 +23,7 @@ export const offerInitiate = (id, price) => {
   return function (dispatch) {
     dispatch(giveOfferPending());
     axios
-      .post(`https://bootcampapi.techcs.io/api/fe/v1/product/offer/${id}`, { offeredPrice: 65 })
+      .post(`https://bootcampapi.techcs.io/api/fe/v1/product/offer/${id}`, { offeredPrice: price })
       .then((response) => {
         console.log("offered Price Response:", response);
         dispatch(giveOfferSuccess(id, price));

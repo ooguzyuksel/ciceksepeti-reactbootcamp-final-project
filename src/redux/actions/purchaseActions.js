@@ -15,13 +15,15 @@ const postPurchaseItemSuccess = (data) => ({
 export const getPurchasedItem = () => async (dispatch) => {
   dispatch(postPurchaseItemPending());
   return axios
-    .put(`https://bootcampapi.techcs.io/api/fe/v1/product/purchase/${productID}`, {
-      headers: {
-        Authorization: `Bearer ${userTokenID}`,
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    })
+    .put(`https://bootcampapi.techcs.io/api/fe/v1/product/purchase/${productID}`)
     .then((data) => dispatch(postPurchaseItemSuccess(data)))
     .catch((error) => console.log("Category Error:", error));
 };
+
+/*  {
+  headers: {
+    Authorization: `Bearer ${userTokenID}`,
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  },
+} */

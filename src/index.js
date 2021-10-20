@@ -1,5 +1,5 @@
 import "./index.scss";
-
+import axios from "axios";
 import ReactDOM from "react-dom";
 import React from "react";
 
@@ -10,6 +10,16 @@ import { store, persistor } from "./redux/store/store";
 
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+
+axios.interceptors.request.use((request) => {
+  let token = localStorage.getItem("loggedUserKey");
+  request.headers.Authorization = `Bearer ${token}`;
+  return request;
+});
+
+axios.interceptors.response.use((response) => {
+  return response;
+});
 
 ReactDOM.render(
   <Provider store={store}>

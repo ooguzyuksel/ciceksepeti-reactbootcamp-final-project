@@ -47,7 +47,7 @@
   border-radius: 10px;
 
   &::before {
-    content: "Alınan Teklif: ";
+    content: "Verilen Teklif: ";
     color: rgba($categoryBlack, 0.5);
   }
 }

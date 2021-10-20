@@ -112,11 +112,76 @@
   padding: 30px;
 }
 
+.right-area-wrapper {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .upload-button {
   @include button($buttonFadedBlack, $lightButtonGrayIdle, 15px 50px);
   border-radius: 50px;
   font-weight: 100;
   margin-bottom: 20px;
+}
+
+.save-button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+.save-button {
+  @include button($pureWhite, $categoryClickedBlue, 15px 75px);
+  margin: 10px 0;
+}
+.price-offer-container {
+  max-width: 40%;
+}
+.toggle-option {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: relative;
+}
+
+.toggle-option .inputWrapper {
+  position: relative;
+}
+
+.addproduct-checkbox {
+  position: absolute;
+  visibility: hidden;
+
+  &:checked + span {
+    background-color: $categoryClickedBlue;
+
+    &:before {
+      left: 27px;
+    }
+  }
+}
+
+.checkbox-span {
+  display: flex;
+  cursor: pointer;
+  width: 50px;
+  height: 25px;
+  border-radius: 100px;
+  background-color: $backgroundGray;
+  position: relative;
+  transition: background-color 0.2s;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 21px;
+    height: 21px;
+    border-radius: 21px;
+    transition: 0.2s;
+    background-color: $pureWhite;
+  }
 }
 
 @media only screen and (max-width: 600px) {
@@ -132,5 +197,12 @@
   .left-area {
     border-right: none;
     padding: 0 15px;
+  }
+  .price-offer-container {
+    max-width: 100%;
+  }
+
+  .save-button {
+    width: 100%;
   }
 }

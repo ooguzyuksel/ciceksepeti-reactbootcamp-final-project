@@ -17,28 +17,31 @@ import { useSelector, useDispatch } from "react-redux";
 import { getPurchasedItem } from "redux/actions/purchaseActions";
 import { radioValues } from "../misc/radioButtonValues";
 import { elementCapitalizer } from "../misc/firstLetterCapitalizer";
+import { offerInitiate } from "../../redux/actions/giveProductOffer";
 import axios from "../../../node_modules/axios/index";
+import { getGivenOffers } from "../../redux/actions/givenOffers";
 
 function ProductDetails() {
-  const userTokenId = useSelector((state) => state.auth.user);
+  // const userTokenId = useSelector((state) => state.auth.user);
+  const offeredPriceFromDB = useSelector((state) => state);
   const puchasedItem = useSelector((state) => state);
   const modalRef = useRef();
   const modalSecondRef = useRef();
   let { productDetailId } = useParams();
   const [getProduct, setGetProduct] = useState({});
-  const [offeredValue, setOfferedValue] = useState(0);
+  const [offeredValue, setOfferedValue] = useState(null);
   const [postError, setPostError] = useState(null);
-  const [finalOfferedPrice, setFinalOfferedPrice] = useState(
-    localStorage.getItem(productDetailId, offeredValue)
-  );
-  const [offerPriceButtonCheck, setOfferPriceButtonCheck] = useState(
-    localStorage.getItem(productDetailId, offeredValue)
-  );
+  const [finalOfferedPrice, setFinalOfferedPrice] = useState(offeredValue);
+  const [offerPriceButtonCheck, setOfferPriceButtonCheck] = useState(offeredValue);
   const [soldItemID, setSoldItemID] = useState(false);
+  const givenOfferItems = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  console.log("Purchased Item: ", { puchasedItem });
+  console.log("Offered Value from DB:", offeredPriceFromDB);
+  // console.log("Purchased Item: ", { puchasedItem });
   console.log("Product ID:", productDetailId);
+  console.log("Given offered item:", givenOfferItems);
+
   // MODALS - Opening modal from different component to handle resuable modal
   const openModal = () => {
     modalRef.current.modalOpener();
@@ -82,35 +85,36 @@ function ProductDetails() {
 
   // Retreive offer
   const retreiveHandler = () => {
-    localStorage.removeItem(productDetailId, offeredValue);
+    // localStorage.removeItem(productDetailId, offeredValue);
     setOfferPriceButtonCheck(false);
     notifyRetrieveSuccess();
     setFinalOfferedPrice(null);
   };
 
   // OFFER - POST REQUEST"
-  const config = {
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${userTokenId}` },
-  };
-  const mainPosOfferedValue = async () => {
-    await axios
-      .post(
-        `https://bootcampapi.techcs.io/api/fe/v1/product/offer/${productDetailId}`,
-        {
-          offeredPrice: offeredValue,
-        },
-        config
-      )
-      .then((response) => console.log("Give Offer Response: ", response))
-      .catch((err) => setPostError(err));
-  };
+  // const config = {
+  //   headers: { "Content-Type": "application/json", Authorization: `Bearer ${userTokenId}` },
+  // };
+  // const mainPosOfferedValue = async () => {
+  //   await axios
+  //     .post(
+  //       `https://bootcampapi.techcs.io/api/fe/v1/product/offer/${productDetailId}`,
+  //       {
+  //         offeredPrice: offeredValue,
+  //       }
+  //       // config
+  //     )
+  //     .then((response) => console.log("Give Offer Response: ", response))
+  //     .catch((err) => setPostError(err));
+  // };
 
   const handleOfferSubmit = (e) => {
     e.preventDefault();
     if (offeredValue > 0) {
-      mainPosOfferedValue();
+      // mainPosOfferedValue();
       setFinalOfferedPrice(offeredValue);
-      localStorage.setItem(productDetailId, offeredValue);
+      dispatch(offerInitiate(productDetailId, offeredValue));
+      // localStorage.setItem(productDetailId, offeredValue);
       notifySuccess();
       setOfferPriceButtonCheck(true);
       setTimeout(() => {
@@ -126,6 +130,7 @@ function ProductDetails() {
 
   const purchaseHandler = (e) => {
     e.preventDefault();
+    closeModalSecond();
     setSoldItemID(true);
     notifyPurchaseSuccess();
     dispatch(getPurchasedItem());
@@ -141,6 +146,7 @@ function ProductDetails() {
   // Mounting getProductData() function when get data productDetailId drilled from parent component
   useEffect(() => {
     getProductData();
+    getGivenOffers();
   }, [productDetailId]);
 
   return (
@@ -187,7 +193,7 @@ function ProductDetails() {
               </div>
             )}
             <div>
-              {!getProduct.isSold && !soldItemID ? (
+              {!getProduct.isSold ? (
                 <>
                   <button
                     type="submit"
@@ -220,7 +226,7 @@ function ProductDetails() {
                   Bu Ürün Satışta Değil
                 </button>
               )}
-              {!getProduct?.isSold && getProduct?.isOfferable && !soldItemID && (
+              {!getProduct?.isSold && getProduct?.isOfferable && (
                 <>
                   {!offerPriceButtonCheck && (
                     <button
