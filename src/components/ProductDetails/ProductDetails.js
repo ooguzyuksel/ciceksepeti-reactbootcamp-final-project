@@ -22,7 +22,6 @@ import axios from "../../../node_modules/axios/index";
 import { getGivenOffers } from "../../redux/actions/givenOffers";
 
 function ProductDetails() {
-  // const userTokenId = useSelector((state) => state.auth.user);
   const offeredPriceFromDB = useSelector((state) => state);
   const puchasedItem = useSelector((state) => state);
   const modalRef = useRef();
@@ -34,13 +33,13 @@ function ProductDetails() {
   const [finalOfferedPrice, setFinalOfferedPrice] = useState(offeredValue);
   const [offerPriceButtonCheck, setOfferPriceButtonCheck] = useState(offeredValue);
   const [soldItemID, setSoldItemID] = useState(false);
-  const givenOfferItems = useSelector((state) => state);
+  const givenOfferedPrice = useSelector((state) => state.givenOffers.givenOffers.data);
   const dispatch = useDispatch();
 
-  console.log("Offered Value from DB:", offeredPriceFromDB);
+  // console.log("Offered Value from DB:", offeredPriceFromDB);
   // console.log("Purchased Item: ", { puchasedItem });
-  console.log("Product ID:", productDetailId);
-  console.log("Given offered item:", givenOfferItems);
+  // console.log("Product ID:", productDetailId);
+  console.log("Given offered price:", givenOfferedPrice);
 
   // MODALS - Opening modal from different component to handle resuable modal
   const openModal = () => {
@@ -69,20 +68,6 @@ function ProductDetails() {
     setOfferedValue(Number(e.target.value));
   };
 
-  // Buraya tekrar bakılacak. Şu an teklifi geri çek çalışmıyor.
-  /*   const configForPurchase = {
-    headers: { Authorization: `Bearer ${userTokenId}` },
-  };
-  const purchaseHandlerAxiosPut = async () => {
-    await axios
-      .put(
-        `http://bootcampapi.techcs.io/api/fe/v1/product/purchase/${productDetailId}`,
-        configForPurchase
-      )
-      .then((response) => console.log("Purchase Response: ", response))
-      .catch((err) => console.log(err));
-  }; */
-
   // Retreive offer
   const retreiveHandler = () => {
     // localStorage.removeItem(productDetailId, offeredValue);
@@ -91,30 +76,11 @@ function ProductDetails() {
     setFinalOfferedPrice(null);
   };
 
-  // OFFER - POST REQUEST"
-  // const config = {
-  //   headers: { "Content-Type": "application/json", Authorization: `Bearer ${userTokenId}` },
-  // };
-  // const mainPosOfferedValue = async () => {
-  //   await axios
-  //     .post(
-  //       `https://bootcampapi.techcs.io/api/fe/v1/product/offer/${productDetailId}`,
-  //       {
-  //         offeredPrice: offeredValue,
-  //       }
-  //       // config
-  //     )
-  //     .then((response) => console.log("Give Offer Response: ", response))
-  //     .catch((err) => setPostError(err));
-  // };
-
   const handleOfferSubmit = (e) => {
     e.preventDefault();
     if (offeredValue > 0) {
-      // mainPosOfferedValue();
       setFinalOfferedPrice(offeredValue);
       dispatch(offerInitiate(productDetailId, offeredValue));
-      // localStorage.setItem(productDetailId, offeredValue);
       notifySuccess();
       setOfferPriceButtonCheck(true);
       setTimeout(() => {
@@ -125,9 +91,8 @@ function ProductDetails() {
       notifyError();
     }
   };
-  // console.log({ getProduct });
-  // console.log({ getOfferedReduxFinalPrice });
 
+  // Purchasing Item
   const purchaseHandler = (e) => {
     e.preventDefault();
     closeModalSecond();
@@ -135,6 +100,7 @@ function ProductDetails() {
     notifyPurchaseSuccess();
     dispatch(getPurchasedItem());
   };
+
   // Fetching asyncroniously id entered data in order to show it Product Details Page
   const getProductData = async () => {
     await axios
@@ -146,8 +112,8 @@ function ProductDetails() {
   // Mounting getProductData() function when get data productDetailId drilled from parent component
   useEffect(() => {
     getProductData();
-    getGivenOffers();
-  }, [productDetailId]);
+    dispatch(getGivenOffers());
+  }, []);
 
   return (
     <div className="home-wrapper">
@@ -184,14 +150,15 @@ function ProductDetails() {
               <span>{elementCapitalizer(getProduct?.status?.title)}</span>
             </div>
             <h2>{getProduct.price} TL</h2>
-            {finalOfferedPrice && (
-              <div className="final-offered-price">
+
+            {givenOfferedPrice?.map((newOfferPrice) => (
+              <div className="final-offered-price" key={newOfferPrice.id}>
                 <span>
-                  <span className="final-offered-price-subtitle"> Verilen Teklif: </span>
-                  <b>{finalOfferedPrice} TL</b>
+                  <span className="final-offered-price-subtitle">Verilen Teklif : </span>
+                  <b>{newOfferPrice.offeredPrice} TL</b>
                 </span>
               </div>
-            )}
+            ))}
             <div>
               {!getProduct.isSold ? (
                 <>
@@ -228,21 +195,22 @@ function ProductDetails() {
               )}
               {!getProduct?.isSold && getProduct?.isOfferable && (
                 <>
-                  {!offerPriceButtonCheck && (
-                    <button
-                      type="submit"
-                      className="offer-button"
-                      onClick={() => {
-                        openModal();
-                      }}
-                    >
-                      Teklif Ver
-                    </button>
-                  )}
-                  {offerPriceButtonCheck && (
-                    <button type="submit" className="offer-button" onClick={retreiveHandler}>
-                      Teklifi Geri Çek
-                    </button>
+                  {givenOfferedPrice?.map((newOfferPrice) =>
+                    !newOfferPrice.offeredPrice ? (
+                      <button
+                        type="submit"
+                        className="offer-button"
+                        onClick={() => {
+                          openModal();
+                        }}
+                      >
+                        Teklif Ver
+                      </button>
+                    ) : (
+                      <button type="submit" className="offer-button" onClick={retreiveHandler}>
+                        Teklifi Geri Çek
+                      </button>
+                    )
                   )}
                   {/* Offer Modal */}
                   <Modal ref={modalRef}>

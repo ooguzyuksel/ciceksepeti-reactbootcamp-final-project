@@ -10,7 +10,6 @@ import "./givenoffers.scss";
 
 function GivenOffers() {
   const givenOfferItems = useSelector((state) => state.givenOffers.givenOffers.data);
-  const givenoffertest = useSelector((state) => state);
   const dispatch = useDispatch();
   const modalSecondRef = useRef();
   const openModalSecond = () => {
@@ -50,7 +49,9 @@ function GivenOffers() {
           </div>
           <div className="right-side">
             <div className="given-offer-result">
-              {offeredItem?.isSold === "sold" && <span className="offer-rejected">Reddedildi</span>}
+              {offeredItem?.isSold === "sold" && (
+                <span className="offer-bought-span">Satın Alındı</span>
+              )}
               {!offeredItem?.isSold && (
                 <div>
                   <button
@@ -60,7 +61,12 @@ function GivenOffers() {
                   >
                     Satın Al
                   </button>
-                  <span className="offer-accepted">Onaylandı</span>
+                  {offeredItem?.status === "accepted" && (
+                    <span className="offer-accepted-span">Onaylandı</span>
+                  )}
+                  {offeredItem?.status === "rejected" && (
+                    <span className="offer-rejected-span">Reddedildi</span>
+                  )}
                   <ModalSecond ref={modalSecondRef}>
                     <form className="purchase-container">
                       <h3 className="purchase-title">SATIN AL</h3>
@@ -81,7 +87,7 @@ function GivenOffers() {
           </div>
         </div>
       ))}
-      {givenOfferItems?.length === 0 && <h1> Henüz bir teklif vermediniz.</h1>}
+      {givenOfferItems?.length === 0 && <h3> Henüz bir teklif vermediniz.</h3>}
       <ToastContainer />
     </div>
   );

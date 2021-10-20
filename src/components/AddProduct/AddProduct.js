@@ -12,6 +12,7 @@ import { getItemStatusses } from "../../redux/actions/productStatusAction";
 import { getBrands } from "../../redux/actions/getBrandsAction";
 import { getColors } from "../../redux/actions/getColorsAction";
 import axios from "../../../node_modules/axios/index";
+import { addNewProductInitiate } from "../../redux/actions/addNewProductAction";
 
 function AddProduct() {
   const user = useSelector((state) => state.auth.user);
@@ -19,16 +20,19 @@ function AddProduct() {
   const statusses = useSelector((state) => state.itemStatusses.statusses.data);
   const brands = useSelector((state) => state.brands.brands.data);
   const colors = useSelector((state) => state.colors.colors.data);
+  const uploadedInformations = useSelector((state) => state);
   const dispatch = useDispatch();
 
   // Notification Pop-up Library
   const errorNotification = (text) => toast.error(text, { autoClose: 3000 });
+  const successNotification = (text) => toast.success(text, { autoClose: 5000 });
 
   // User Token from Localstorage
   const token = localStorage.getItem("loggedUserKey");
 
   // Image uploading state
   const [image, setImage] = useState("");
+  const [imageUploadError, setImageUploadError] = useState(null);
 
   // Spagetti code but the best way i know for now :(
   const [price, setPrice] = useState("");
@@ -62,8 +66,11 @@ function AddProduct() {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((res) => setImage(res.data.url));
+      .then((res) => setImage(res.data.url))
+      .catch((err) => errorNotification("DİKKAT! Resim 400 KB'dan fazla olamaz.", err));
   };
+
+  console.log({ image });
 
   // Handlers
   // Category Handler
@@ -104,33 +111,54 @@ function AddProduct() {
         .map((id) => setStatusId(id.id));
     }
   };
+
+  // Remove Image Handler
+
+  const removeImgHandler = () => {
+    setImage("");
+  };
   // Save data to Database
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    console.log(price);
-    console.log(title);
-    console.log(statusTitle);
-    console.log(colorTitle);
-    console.log(brandTitle);
-    console.log(categoryTitle);
-    console.log(description);
-    console.log(isOfferable);
-    console.log("Category ID: ", categoryId);
-    console.log("Brand ID:", brandId);
-    console.log("Color ID:", colorId);
-    console.log("Status ID:", statusId);
-    console.log("Image URL", image);
-    {
-      !price &&
-        !title &&
-        !statusTitle &&
-        !colorTitle &&
-        !brandTitle &&
-        !categoryTitle &&
-        !description &&
-        errorNotification("Hiçbir alan boş bırakılamaz.");
+
+    if (
+      price.length === 0 ||
+      title.length === 0 ||
+      statusTitle.length === 0 ||
+      colorTitle.length === 0 ||
+      brandTitle.length === 0 ||
+      categoryTitle.length === 0 ||
+      description.length === 0 ||
+      image.length === 0
+    ) {
+      errorNotification("Hiçbir alan boş bırakılamaz.");
+    } else if (title.length > 100) {
+      errorNotification("Ürün adı 100 karakterden uzun olamaz");
+    } else if (description.length > 500) {
+      errorNotification("Açıklama 500 karakterden uzun olamaz");
+    } else {
+      dispatch(
+        addNewProductInitiate(
+          price,
+          image,
+          title,
+          statusTitle,
+          statusId,
+          colorTitle,
+          colorId,
+          brandTitle,
+          brandId,
+          categoryTitle,
+          categoryId,
+          description,
+          isOfferable
+        )
+      );
+      successNotification("Ürün başarıyla yüklendi.");
     }
   };
+
+  console.log("Uploaded Files:", uploadedInformations);
 
   return (
     <>
@@ -290,23 +318,40 @@ function AddProduct() {
                 <div className="right-area-wrapper">
                   <div>
                     <h3>Ürün Görseli</h3>
-                    <div className="right-area-container">
-                      <img src={uploadicon} alt="uploadicon" />
-                      <p>Sürükleyip bırakarak yükle veya</p>
-                      {/* Image Uploading Section */}
-                      <div>
-                        <button className="upload-button">
+                    {!image && (
+                      <div className="right-area-container">
+                        <img src={uploadicon} alt="uploadicon" />
+                        <p>Sürükleyip bırakarak yükle veya</p>
+                        {/* Image Uploading Section */}
+                        <div>
                           <input
                             type="file"
                             name="file"
+                            id="uploadimg"
+                            accept=".png, .jpg, .jpeg"
+                            className="upload-input"
                             placeholder="Bir resim seçiniz"
                             onChange={uploadImage}
                           />
-                        </button>
-                        <button type="button">Resmi Yükle</button>
+
+                          <label className="upload-button" htmlFor="uploadimg">
+                            Görsel Seçin
+                          </label>
+                        </div>
+                        <small>PNG ve JPEG Dosya boyutu: max. 100kb</small>
                       </div>
-                      <small>PNG ve JPEG Dosya boyutu: max. 100kb</small>
-                    </div>
+                    )}
+                    {image && (
+                      <div className="uploaded-image-container">
+                        <img src={image} alt={title} className="uploaded-image-preview" />
+                        <button
+                          className="uploaded-image-container-close-button"
+                          onClick={removeImgHandler}
+                        >
+                          <i className="fas fa-times-circle" />
+                        </button>
+                      </div>
+                    )}
                   </div>
                   <div className="save-button-container">
                     <button className="save-button" type="submit" onClick={onSubmitHandler}>

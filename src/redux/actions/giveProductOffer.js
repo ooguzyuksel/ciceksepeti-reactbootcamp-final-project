@@ -11,22 +11,17 @@ const giveOfferSuccess = (productId, givenOfferPrice) => ({
   givenOfferPrice,
 });
 
-// const config = {
-//   headers: {
-//     "Content-Type": "application/json",
-//     Authorization: `Bearer ${authReducer.initialstate.user}`,
-//   },
-// };
-
 // POST REQUEST
-export const offerInitiate = (id, price) => {
+export const offerInitiate = (productDetailId, price) => {
   return function (dispatch) {
     dispatch(giveOfferPending());
     axios
-      .post(`https://bootcampapi.techcs.io/api/fe/v1/product/offer/${id}`, { offeredPrice: price })
+      .post(`https://bootcampapi.techcs.io/api/fe/v1/product/offer/${productDetailId}`, {
+        offeredPrice: price,
+      })
       .then((response) => {
         console.log("offered Price Response:", response);
-        dispatch(giveOfferSuccess(id, price));
+        dispatch(giveOfferSuccess(productDetailId, price));
       })
       .catch((err) => console.log("offered price error:", err));
   };

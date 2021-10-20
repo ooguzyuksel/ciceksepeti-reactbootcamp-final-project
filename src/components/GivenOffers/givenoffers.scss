@@ -62,8 +62,16 @@
   }
 }
 
-.offer-rejected {
+.offer-rejected-span {
   color: $rejectionRed;
+}
+
+.offer-accepted-span {
+  color: $darkButtonBlue;
+}
+
+.offer-bought-span {
+  color: $boughtSuccessGreen;
 }
 
 .offer-accepted {

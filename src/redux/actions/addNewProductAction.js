@@ -21,6 +21,19 @@ const addNewProductSuccess = (
   isOfferable
 ) => ({
   type: types.ADD_NEW_PRODUCT_SUCCESS,
+  price,
+  imageUrl,
+  title,
+  statustitle,
+  statusid,
+  colortitle,
+  colorid,
+  brandtitle,
+  brandid,
+  categorytitle,
+  categoryid,
+  description,
+  isOfferable,
 });
 
 const addNewProductFail = (err) => ({
