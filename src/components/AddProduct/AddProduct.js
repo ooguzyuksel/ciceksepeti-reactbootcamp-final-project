@@ -1,7 +1,7 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable react/button-has-type */
 import Navbar from "components/Navbar/Navbar";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./addproduct.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
@@ -65,6 +65,45 @@ function AddProduct() {
       .then((res) => setImage(res.data.url));
   };
 
+  // Handlers
+  // Category Handler
+  const categoryInfoHandler = (e) => {
+    let categoryValue = e.target.value;
+    setCategoryTitle(categoryValue);
+    {
+      categories
+        .filter((ctgid) => ctgid.title.includes(categoryValue))
+        .map((id) => setCategoryId(id.id));
+    }
+  };
+  // Brand Handler
+  const brandInfoHandler = (e) => {
+    let brandValue = e.target.value;
+    setBrandTitle(brandValue);
+    {
+      brands.filter((brandid) => brandid.title.includes(brandValue)).map((id) => setBrandId(id.id));
+    }
+  };
+  // Color Handler
+  const colorInfoHandler = (e) => {
+    let colorValue = e.target.value;
+    setColorTitle(colorValue);
+    {
+      colors.filter((colorid) => colorid.title.includes(colorValue)).map((id) => setColorId(id.id));
+    }
+  };
+
+  // Status Info Handler
+
+  const statusInfoHandler = (e) => {
+    let statusValue = e.target.value;
+    setstatusTitle(statusValue);
+    {
+      statusses
+        .filter((statusid) => statusid.title.includes(statusValue))
+        .map((id) => setStatusId(id.id));
+    }
+  };
   // Save data to Database
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -76,7 +115,11 @@ function AddProduct() {
     console.log(categoryTitle);
     console.log(description);
     console.log(isOfferable);
+    console.log("Category ID: ", categoryId);
     console.log("Brand ID:", brandId);
+    console.log("Color ID:", colorId);
+    console.log("Status ID:", statusId);
+    console.log("Image URL", image);
     {
       !price &&
         !title &&
@@ -89,9 +132,6 @@ function AddProduct() {
     }
   };
 
-  // Upload image Async Function
-
-  console.log("resim urlsi", brandTitle);
   return (
     <>
       {user && (
@@ -133,11 +173,9 @@ function AddProduct() {
                   <div className="sub-container-secondary">
                     <label className="addproduct-labels">Kategori</label>
                     <select
-                      name=""
-                      id=""
                       className="addproduct-selects"
                       // value={categoryTitle}
-                      onChange={(e) => setCategoryTitle(e.target.value)}
+                      onChange={categoryInfoHandler}
                       required
                     >
                       <option disabled selected>
@@ -158,7 +196,7 @@ function AddProduct() {
                       id=""
                       className="addproduct-selects"
                       // value={brandTitle}
-                      onChange={(e) => setBrandTitle(e.target.value)}
+                      onChange={brandInfoHandler}
                       required
                     >
                       <option disabled selected>
@@ -183,7 +221,7 @@ function AddProduct() {
                       id=""
                       className="addproduct-selects"
                       // value={colorTitle}
-                      onChange={(e) => setColorTitle(e.target.value)}
+                      onChange={colorInfoHandler}
                       required
                     >
                       <option disabled selected>
@@ -204,7 +242,7 @@ function AddProduct() {
                       id=""
                       className="addproduct-selects"
                       // value={statusTitle}
-                      onChange={(e) => setstatusTitle(e.target.value)}
+                      onChange={statusInfoHandler}
                       required
                     >
                       <option disabled selected>
