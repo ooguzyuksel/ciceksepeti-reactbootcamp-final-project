@@ -5,6 +5,8 @@ import React from "react";
 
 import { Provider } from "react-redux";
 
+import { BrowserRouter } from "react-router-dom";
+
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./redux/store/store";
 
@@ -24,7 +26,9 @@ axios.interceptors.response.use((response) => {
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate persistor={persistor}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </PersistGate>
   </Provider>,
 

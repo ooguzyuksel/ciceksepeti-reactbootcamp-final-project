@@ -19,8 +19,10 @@ function GivenOffers() {
     modalSecondRef.current.modalSecondCloser();
   };
   const notifyPurchaseSuccess = (text) => toast.success(text, { autoClose: 3000 });
+
   useEffect(() => {
     dispatch(getGivenOffers());
+    dispatch(getPurchasedItem());
   }, []);
 
   const purchaseHandler = (e) => {
@@ -54,15 +56,21 @@ function GivenOffers() {
               )}
               {!offeredItem?.isSold && (
                 <div>
-                  <button
-                    onClick={() => {
-                      openModalSecond();
-                    }}
-                  >
-                    Satın Al
-                  </button>
+                  {offeredItem?.status !== "accepted" && offeredItem?.status !== "rejected" && (
+                    <span className="offer-waiting-span">Satıcının cevabı bekleniyor</span>
+                  )}
+
                   {offeredItem?.status === "accepted" && (
-                    <span className="offer-accepted-span">Onaylandı</span>
+                    <>
+                      <button
+                        onClick={() => {
+                          openModalSecond();
+                        }}
+                      >
+                        Satın Al
+                      </button>
+                      <span className="offer-accepted-span">Onaylandı</span>
+                    </>
                   )}
                   {offeredItem?.status === "rejected" && (
                     <span className="offer-rejected-span">Reddedildi</span>

@@ -11,18 +11,16 @@ import AddProduct from "components/AddProduct/AddProduct";
 
 function App() {
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/login" component={Login} />
-        <Route path="/product/:productDetailId" component={ProductDetails} />
-        <Route path="/myaccount" component={MyAccount} />
-        <Route exact path="/myaccount/gottenoffers" component={GottenOffers} />
-        <Route exact path="/myaccount/givenoffers" component={GivenOffers} />
-        <Route path="/addproduct" component={AddProduct} />
-      </Switch>
-    </Router>
+    <Switch>
+      <Route exact path="/" component={Home} />
+      <Route path="/signup" component={Signup} />
+      <Route path="/login" component={Login} />
+      <Route path="/product/:productDetailId" component={ProductDetails} />
+      <Route path="/myaccount" component={MyAccount} />
+      <Route exact path="/myaccount/gottenoffers" component={GottenOffers} />
+      <Route exact path="/myaccount/givenoffers" component={GivenOffers} />
+      <Route path="/addproduct" component={AddProduct} />
+    </Switch>
   );
 }
 

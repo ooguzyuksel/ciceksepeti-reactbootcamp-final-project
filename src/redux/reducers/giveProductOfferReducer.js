@@ -4,6 +4,7 @@ const initialState = {
   productId: null,
   givenOfferPrice: null,
   loading: false,
+  offered: false,
 };
 
 const giveProductOfferReducer = (state = initialState, action) => {
@@ -14,6 +15,7 @@ const giveProductOfferReducer = (state = initialState, action) => {
         productId: action.productId,
         givenOfferPrice: action.givenOfferPrice,
         loading: false,
+        offered: true,
       };
     case types.GIVE_PRODUCT_OFFER_PENDING:
       return {

@@ -4,13 +4,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getReceivedOffers } from "redux/actions/receivedOffers";
 import { acceptOfferHandler } from "components/misc/acceptOfferHandlerAxiosPut";
+import { rejectOfferHandler } from "components/misc/rejectOfferHandlerAxios";
 import "../GivenOffers/givenoffers.scss";
 import "./receivedoffers.scss";
 
 function ReceivedOffers() {
   const receivedOfferItems = useSelector((state) => state.receivedOffers.receivedOffers.data);
-  const [pageRenderer, setPageRenderer] = useState(false);
   const [acceptOfferResult, setAcceptOfferResult] = useState({});
+  const [rejectOfferResult, setRejectOfferResult] = useState({});
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -18,23 +19,32 @@ function ReceivedOffers() {
   }, []);
 
   useEffect(() => {
-    receivedOfferItems;
-  }, [pageRenderer]);
+    dispatch(getReceivedOffers());
+  }, [acceptOfferResult]);
+
+  useEffect(() => {
+    dispatch(getReceivedOffers());
+  }, [setRejectOfferResult]);
+
   // Accept & Reject Handlers
   const acceptOfferButtonHandler = (receivedOfferId) => {
     // console.log(receivedOfferId);
     acceptOfferHandler(receivedOfferId, setAcceptOfferResult);
-    setPageRenderer(!setPageRenderer);
     // acceptOfferHandler();
   };
 
   const rejectOfferButtonHandler = (receivedOfferId) => {
-    console.log(receivedOfferId);
+    // console.log(receivedOfferId);
+    rejectOfferHandler(receivedOfferId, setRejectOfferResult);
     // acceptOfferHandler();
   };
 
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+  };
   console.log("receivedOfferItems", receivedOfferItems);
   console.log("Accept Offer State", acceptOfferResult);
+  console.log("Reject Offer State", rejectOfferResult);
   return (
     <div>
       {receivedOfferItems?.length === 0 && (
@@ -64,24 +74,35 @@ function ReceivedOffers() {
             <div className="right-side">
               <div className="given-offer-result">
                 {receivedOffer?.status === "offered" && (
-                  <div>
-                    <button onClick={() => acceptOfferButtonHandler(receivedOffer.id)}>
-                      Onayla
-                    </button>
-                    <button onClick={() => rejectOfferButtonHandler(receivedOffer.id)}>
-                      Reddet
-                    </button>
-                  </div>
+                  <>
+                    <div>
+                      <button
+                        type="submit"
+                        onClick={() => acceptOfferButtonHandler(receivedOffer.id)}
+                        onSubmit={onSubmitHandler}
+                      >
+                        Onayla
+                      </button>
+                      <button
+                        type="submit"
+                        onClick={() => rejectOfferButtonHandler(receivedOffer.id)}
+                        className="reject-button"
+                      >
+                        Reddet
+                      </button>
+                    </div>
+                  </>
                 )}
-                {receivedOffer?.status === "rejected" && (
+                {console.log("gelen teklifler", receivedOffer.status)}
+
+                {receivedOffer?.status !== "offered" && receivedOffer?.status === "rejected" && (
                   <span className="offer-rejected-span">Reddedildi</span>
                 )}
-                {receivedOffer?.isSold === "sold" ? (
+                {/* {receivedOffer?.status !== "offered" && receivedOffer?.isSold === "sold" && (
                   <span className="offer-bought-span">Müşteri Ürünü Satın Aldı</span>
-                ) : (
-                  receivedOffer?.status === "accepted" && (
-                    <span className="offer-accepted-span">Onaylandı</span>
-                  )
+                )} */}
+                {receivedOffer?.status !== "offered" && receivedOffer?.status === "accepted" && (
+                  <span className="offer-accepted-span">Onaylandı</span>
                 )}
               </div>
             </div>

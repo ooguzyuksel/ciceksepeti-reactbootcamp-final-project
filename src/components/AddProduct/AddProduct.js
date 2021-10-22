@@ -70,8 +70,6 @@ function AddProduct() {
       .catch((err) => errorNotification("DİKKAT! Resim 400 KB'dan fazla olamaz.", err));
   };
 
-  console.log({ image });
-
   // Handlers
   // Category Handler
   const categoryInfoHandler = (e) => {
@@ -155,10 +153,21 @@ function AddProduct() {
         )
       );
       successNotification("Ürün başarıyla yüklendi.");
+      setPrice("");
+      setTitle("");
+      setstatusTitle("");
+      setStatusId("");
+      setColorTitle("");
+      setColorId("");
+      setBrandTitle("");
+      setBrandId("");
+      setCategoryTitle("");
+      setCategoryId("");
+      setDescription("");
+      setIsOfferable("");
+      setImage("");
     }
   };
-
-  console.log("Uploaded Files:", uploadedInformations);
 
   return (
     <>

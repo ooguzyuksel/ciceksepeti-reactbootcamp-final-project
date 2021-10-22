@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable no-alert */
 /* eslint-disable radix */
 /* eslint-disable react/no-unescaped-entities */
@@ -15,6 +16,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
 import { getPurchasedItem } from "redux/actions/purchaseActions";
+import { cancelOfferHandler } from "components/misc/cancelOfferHandlerAxios";
 import { radioValues } from "../misc/radioButtonValues";
 import { elementCapitalizer } from "../misc/firstLetterCapitalizer";
 import { offerInitiate } from "../../redux/actions/giveProductOffer";
@@ -22,26 +24,16 @@ import axios from "../../../node_modules/axios/index";
 import { getGivenOffers } from "../../redux/actions/givenOffers";
 
 function ProductDetails() {
-  const offeredPriceFromDB = useSelector((state) => state);
-  const puchasedItem = useSelector((state) => state);
   const modalRef = useRef();
   const modalSecondRef = useRef();
   let { productDetailId } = useParams();
   const [getProduct, setGetProduct] = useState({});
   const [offeredValue, setOfferedValue] = useState(null);
-  const [postError, setPostError] = useState(null);
-  const [finalOfferedPrice, setFinalOfferedPrice] = useState(offeredValue);
-  const [offerPriceButtonCheck, setOfferPriceButtonCheck] = useState(offeredValue);
-  const [soldItemID, setSoldItemID] = useState(false);
-  const givenOfferedPrice = useSelector((state) => state.givenOffers.givenOffers.data);
+  const givenOfferedPrice = useSelector((state) => state.givenOffers.givenOffers);
+  const [buttonController, setButtonController] = useState(false);
   const dispatch = useDispatch();
 
-  // console.log("Offered Value from DB:", offeredPriceFromDB);
-  // console.log("Purchased Item: ", { puchasedItem });
-  // console.log("Product ID:", productDetailId);
-  console.log("Given offered price:", givenOfferedPrice);
-
-  // MODALS - Opening modal from different component to handle resuable modal
+  // MODALS
   const openModal = () => {
     modalRef.current.modalOpener();
   };
@@ -69,20 +61,22 @@ function ProductDetails() {
   };
 
   // Retreive offer
-  const retreiveHandler = () => {
-    // localStorage.removeItem(productDetailId, offeredValue);
-    setOfferPriceButtonCheck(false);
+  const retreiveHandler = (e) => {
+    e.preventDefault();
+    localStorage.removeItem(productDetailId, offeredValue);
     notifyRetrieveSuccess();
-    setFinalOfferedPrice(null);
+    givenOfferedPrice.data?.map(
+      (item) => item.product.id === productDetailId && cancelOfferHandler(item?.id)
+    );
+    setOfferedValue(null);
   };
 
   const handleOfferSubmit = (e) => {
     e.preventDefault();
-    if (offeredValue > 0) {
-      setFinalOfferedPrice(offeredValue);
+
+    if (offeredValue) {
       dispatch(offerInitiate(productDetailId, offeredValue));
       notifySuccess();
-      setOfferPriceButtonCheck(true);
       setTimeout(() => {
         closeModal();
         setOfferedValue(0);
@@ -96,7 +90,6 @@ function ProductDetails() {
   const purchaseHandler = (e) => {
     e.preventDefault();
     closeModalSecond();
-    setSoldItemID(true);
     notifyPurchaseSuccess();
     dispatch(getPurchasedItem());
   };
@@ -114,6 +107,11 @@ function ProductDetails() {
     getProductData();
     dispatch(getGivenOffers());
   }, []);
+
+  useEffect(() => {
+    getProductData();
+    dispatch(getGivenOffers());
+  }, [offeredValue]);
 
   return (
     <div className="home-wrapper">
@@ -149,16 +147,23 @@ function ProductDetails() {
               </label>
               <span>{elementCapitalizer(getProduct?.status?.title)}</span>
             </div>
-            <h2>{getProduct.price} TL</h2>
+            <h2>{getProduct?.price} TL</h2>
 
-            {givenOfferedPrice?.map((newOfferPrice) => (
-              <div className="final-offered-price" key={newOfferPrice.id}>
-                <span>
-                  <span className="final-offered-price-subtitle">Verilen Teklif : </span>
-                  <b>{newOfferPrice.offeredPrice} TL</b>
-                </span>
-              </div>
-            ))}
+            {/* {givenOfferedPrice.data?.length !== 0 &&
+              givenOfferedPrice.data?.map(
+                (item) =>
+                  item.product.id === productDetailId && (
+                    <div className="final-offered-price" key={item.id}>
+                      <span>
+                        <span className="final-offered-price-subtitle">Verilen Teklif : </span>
+                        <b>{item.offeredPrice} TL</b>
+                        {console.log("Mapden gelenler:", item.product.id)}
+                      </span>
+                    </div>
+                  )
+              )} */}
+
+            {/* {givenOfferedPrice?.data?.map((item) => console.log("kontrol itemi:", item))} */}
             <div>
               {!getProduct.isSold ? (
                 <>
@@ -189,29 +194,57 @@ function ProductDetails() {
                   </ModalSecond>
                 </>
               ) : (
-                <button type="submit" className="item-not-sold">
-                  Bu Ürün Satışta Değil
-                </button>
+                <div className="not-able-to-buy">
+                  <button type="submit" className="item-not-sold">
+                    Bu Ürün Satışta Değil
+                  </button>
+                </div>
               )}
+
+              {/* 1 - Yukarısı tamam */}
               {!getProduct?.isSold && getProduct?.isOfferable && (
                 <>
-                  {givenOfferedPrice?.map((newOfferPrice) =>
-                    !newOfferPrice.offeredPrice ? (
-                      <button
-                        type="submit"
-                        className="offer-button"
-                        onClick={() => {
-                          openModal();
-                        }}
-                      >
-                        Teklif Ver
-                      </button>
-                    ) : (
-                      <button type="submit" className="offer-button" onClick={retreiveHandler}>
-                        Teklifi Geri Çek
-                      </button>
-                    )
+                  {/* TEKLİF VER Button */}
+                  {/* {givenOfferedPrice.data?.map((item) =>
+                    item?.product?.id?.includes(productDetailId)
+                  ) ? (
+                    console.log("teklif var")
+                  ) : (
+                    <button
+                      type="submit"
+                      className="offer-button"
+                      onClick={() => {
+                        openModal();
+                      }}
+                    >
+                      Teklif Ver
+                    </button>
+                  )} */}
+                  {/* // Çok uğraştım ancak burada ne yazık ki teklif verdikten sonra, teklif ver butonunu, teklifin
+                  verildiği ürüne özel olarak gizlemeyi başaramadım. 216 ve 231.satırlar arasında bunu denedim ancak başarılı olmadı. */}
+                  <button
+                    type="submit"
+                    className="offer-button"
+                    onClick={() => {
+                      openModal();
+                    }}
+                  >
+                    Teklif Ver
+                  </button>
+                  {/* {console.log("buraya bak:", givenOfferedPrice)} */}
+                  {/* TEKLİFİ GERİ ÇEK Button */}
+                  {givenOfferedPrice.data?.map(
+                    (item) =>
+                      item.product.id === productDetailId && (
+                        <form key={item.product.id}>
+                          <button type="submit" className="offer-button" onClick={retreiveHandler}>
+                            Teklifi Geri Çek
+                          </button>
+                        </form>
+                      )
                   )}
+                  {/* {console.log("Given Offered Price:", givenOfferedPrice.data)}
+                  {console.log("Get Product", getProduct)} */}
                   {/* Offer Modal */}
                   <Modal ref={modalRef}>
                     <form>

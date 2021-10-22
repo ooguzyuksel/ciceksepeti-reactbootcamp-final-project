@@ -49,6 +49,10 @@
   }
 }
 
+.offerHider {
+  display: none;
+}
+
 .buy-button {
   @include button($pureWhite, $darkButtonBlue);
   min-width: 200px;
@@ -61,6 +65,10 @@
 .item-not-sold {
   @include button($retreiveFontOrange, $retreiveBackgroundOrange);
   cursor: default;
+}
+
+.not-able-to-buy {
+  padding: 20px 0;
 }
 
 .brand-color-status > label {
