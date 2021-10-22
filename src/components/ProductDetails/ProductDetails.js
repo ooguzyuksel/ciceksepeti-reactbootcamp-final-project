@@ -163,20 +163,21 @@ function ProductDetails() {
                   )
               )} */}
 
-            {/* {givenOfferedPrice?.data?.map((item) => console.log("kontrol itemi:", item))} */}
             <div>
               {!getProduct.isSold ? (
                 <>
-                  <button
-                    type="submit"
-                    className="buy-button"
-                    onClick={() => {
-                      openModalSecond();
-                    }}
-                  >
-                    Satın Al
-                  </button>
-
+                  <div className="button-wrapper-purchase-button">
+                    <button
+                      type="submit"
+                      className="buy-button"
+                      onClick={() => {
+                        openModalSecond();
+                      }}
+                    >
+                      Satın Al
+                    </button>
+                  </div>
+                  
                   {/* Purchase Modal */}
                   <ModalSecond ref={modalSecondRef}>
                     <form className="purchase-container">
@@ -203,25 +204,11 @@ function ProductDetails() {
 
               {/* 1 - Yukarısı tamam */}
               {!getProduct?.isSold && getProduct?.isOfferable && (
-                <>
+                <div className="button-wrapper-detail-page">
                   {/* TEKLİF VER Button */}
-                  {/* {givenOfferedPrice.data?.map((item) =>
-                    item?.product?.id?.includes(productDetailId)
-                  ) ? (
-                    console.log("teklif var")
-                  ) : (
-                    <button
-                      type="submit"
-                      className="offer-button"
-                      onClick={() => {
-                        openModal();
-                      }}
-                    >
-                      Teklif Ver
-                    </button>
-                  )} */}
                   {/* // Çok uğraştım ancak burada ne yazık ki teklif verdikten sonra, teklif ver butonunu, teklifin
-                  verildiği ürüne özel olarak gizlemeyi başaramadım. 216 ve 231.satırlar arasında bunu denedim ancak başarılı olmadı. */}
+                  verildiği ürüne özel olarak gizlemeyi başaramadım. */}
+
                   <button
                     type="submit"
                     className="offer-button"
@@ -231,7 +218,7 @@ function ProductDetails() {
                   >
                     Teklif Ver
                   </button>
-                  {/* {console.log("buraya bak:", givenOfferedPrice)} */}
+
                   {/* TEKLİFİ GERİ ÇEK Button */}
                   {givenOfferedPrice.data?.map(
                     (item) =>
@@ -243,11 +230,10 @@ function ProductDetails() {
                         </form>
                       )
                   )}
-                  {/* {console.log("Given Offered Price:", givenOfferedPrice.data)}
-                  {console.log("Get Product", getProduct)} */}
+
                   {/* Offer Modal */}
                   <Modal ref={modalRef}>
-                    <form>
+                    <form className="offer-form">
                       {/* Product Pop-Up Information Area */}
                       <div className="offer-wrapper">
                         <div className="offer-info-container">
@@ -304,7 +290,7 @@ function ProductDetails() {
                       </div>
                     </form>
                   </Modal>
-                </>
+                </div>
               )}
             </div>
             <h3>Açıklama</h3>

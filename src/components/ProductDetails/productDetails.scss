@@ -6,6 +6,7 @@
   justify-content: center;
   min-height: 88vh;
 }
+
 .product-info-container {
   display: flex;
   justify-content: space-evenly;
@@ -100,5 +101,24 @@
   .right-product-info {
     font-size: 0.7rem;
     margin: 0 25px;
+  }
+
+  .button-wrapper-detail-page {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .button-wrapper-purchase-button {
+    & .buy-button {
+      width: 100%;
+      margin-bottom: 5px;
+    }
+  }
+
+  .offer-button,
+  .buy-button,
+  .offer-button {
+    width: 100%;
+    margin-bottom: 5px;
   }
 }

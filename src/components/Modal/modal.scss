@@ -124,3 +124,17 @@
     @include button($pureWhite, $darkButtonBlue, 10px 100px);
   }
 }
+
+@media only screen and (max-width: 600px) {
+  .offer-form {
+    max-width: 350px;
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .offer-form {
+    max-width: 300px;
+    width: 100%;
+  }
+}

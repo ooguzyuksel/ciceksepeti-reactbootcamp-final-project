@@ -21,7 +21,7 @@ function Navbar({ logoutUser }) {
       <div className="navbar-container">
         <div>
           <Link to="/">
-            <img src={ikincielLogo} alt="İkinciEllogo" />
+            <img className="navbar-logo" src={ikincielLogo} alt="İkinciEllogo" />
           </Link>
         </div>
         <div className="navbar-button-wrapper">
@@ -55,9 +55,9 @@ function Navbar({ logoutUser }) {
                 </span>{" "}
                 Hesabım
               </Link>
-              <button type="submit" onClick={logoutUser}>
+              {/* <button type="submit" onClick={logoutUser}>
                 Çıkış Yap
-              </button>
+              </button> */}
             </>
           )}
         </div>

@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable no-alert */
 /* eslint-disable prefer-const */
 import "../Signup/signup.scss";
@@ -31,16 +32,32 @@ function Login() {
     console.log({ error });
   }, [user]);
 
+  // User logged in with wrong ID or Password Validation Feedback
+  useEffect(() => {
+    if (error?.response?.status == 401) {
+      notifyError("Hatalı kullanıcı adı ya da şifre girdiniz.");
+    }
+  }, [error]);
+
   // onSubmitHandler will submit taken data from input and Redirect to HOME Page
   const onSubmitHandler = (e) => {
     e.preventDefault();
     if (mail.length === 0 || password.length === 0) {
       notifyError("Mail veya Parola Boş Olamaz.");
-    } else if (password.length >= 8 && password.length <= 20) {
-      dispatch(loginInitiate(mail, password));
-    } else {
+    } else if (!mail.includes("@") || !mail.includes(".")) {
+      notifyError("Geçerli bir mail adresi giriniz.");
+    } else if (password.length < 8 || password.length > 20) {
       notifyError("Parola 8 Karakterden uzun , 20 Karakterden kısa olmalıdır.");
+    } else if (
+      password.length >= 8 &&
+      password.length <= 20 &&
+      mail.includes("@") &&
+      mail.includes(".")
+    ) {
+      dispatch(loginInitiate(mail, password));
     }
+
+    // If response returns an user not found error below part will be triggered
   };
 
   // this is going to return entered value into input
@@ -78,6 +95,7 @@ function Login() {
                   name="email"
                   id="email"
                   onChange={onChangeHandler}
+                  required
                   placeholder="email@example.com"
                 />
               </div>
@@ -85,7 +103,13 @@ function Login() {
                 <div>
                   <label htmlFor="password">Şifre</label>
                 </div>
-                <input type="text" name="password" id="password" onChange={onChangeHandler} />
+                <input
+                  type="text"
+                  name="password"
+                  required
+                  id="password"
+                  onChange={onChangeHandler}
+                />
               </div>
               <button type="submit" onClick={onSubmitHandler}>
                 Giriş

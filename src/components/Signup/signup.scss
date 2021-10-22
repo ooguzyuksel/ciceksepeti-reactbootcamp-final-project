@@ -84,3 +84,13 @@
     color: $darkButtonBlue;
   }
 }
+
+@media only screen and (max-width: 992px) {
+  .signup__image {
+    display: none;
+  }
+
+  .signup__form {
+    max-width: 60%;
+  }
+}
