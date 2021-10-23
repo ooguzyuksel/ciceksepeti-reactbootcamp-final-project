@@ -32,6 +32,7 @@ function AddProduct() {
 
   // Image uploading state
   const [image, setImage] = useState("");
+  const [uploadImageError, setUploadImageError] = useState("");
   const [uploadPercentage, setUploadPercentage] = useState(0);
 
   // Spagetti code but the best way i know for now :(
@@ -62,31 +63,37 @@ function AddProduct() {
 
   // Uploading img process & handling percentage for progress bar
   const uploadImage = async (e) => {
+    setUploadImageError(null);
     setUploadPercentage(0);
     const files = e.target.files;
     const data = new FormData();
     data.append("file", files[0]);
-    console.log("dosya boyutu:", files[0]);
-    const options = {
-      onUploadProgress: (ProgressEvent) => {
-        const { loaded, total } = ProgressEvent;
-        let percent = Math.floor((loaded * 100) / total);
-        if (percent < 100) {
-          setUploadPercentage(percent);
-        }
-      },
-    };
-    await axios
-      .post("https://bootcampapi.techcs.io/api/fe/v1/file/upload/image", data, options, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+    if (files[0].size > 400000) {
+      errorNotification("Dosya boyutu 400 KB'dan büyük olamaz");
+    } else {
+      const options = {
+        onUploadProgress: (ProgressEvent) => {
+          const { loaded, total } = ProgressEvent;
+          let percent = Math.floor((loaded * 100) / total);
+          if (percent < 100) {
+            setUploadPercentage(percent);
+          }
         },
-      })
-      .then((res) => {
-        setImage(res.data.url);
-        setUploadPercentage(100);
-      })
-      .catch((err) => errorNotification("DİKKAT! Resim 400 KB'dan fazla olamaz.", err));
+      };
+      await axios
+        .post("https://bootcampapi.techcs.io/api/fe/v1/file/upload/image", data, options, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setImage(res.data.url);
+          setUploadPercentage(100);
+        })
+        .catch((err) => setUploadImageError(err));
+    }
+    console.log("dosya boyutu:", files[0]);
+    console.log("dosya boyutu:");
   };
 
   // Handlers
@@ -346,7 +353,7 @@ function AddProduct() {
                 <div className="right-area-wrapper">
                   <div>
                     <h3>Ürün Görseli</h3>
-                    {uploadPercentage >= 1 && uploadPercentage <= 100 ? (
+                    {uploadPercentage >= 1 && uploadPercentage <= 100 && !uploadImageError ? (
                       <div className="right-area-container upload-area">
                         <p>{uploadPercentage}%</p>
                         <div className="progress-bar-wrapper">
@@ -380,7 +387,7 @@ function AddProduct() {
                               Görsel Seçin
                             </label>
                           </div>
-                          <small>PNG ve JPEG Dosya boyutu: max. 100kb</small>
+                          <small>PNG ve JPEG Dosya boyutu: max. 400kb</small>
                         </div>
                       )
                     )}
