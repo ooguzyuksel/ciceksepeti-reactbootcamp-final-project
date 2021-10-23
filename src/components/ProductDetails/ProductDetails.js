@@ -177,7 +177,7 @@ function ProductDetails() {
                       Satın Al
                     </button>
                   </div>
-                  
+
                   {/* Purchase Modal */}
                   <ModalSecond ref={modalSecondRef}>
                     <form className="purchase-container">

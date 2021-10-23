@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./products.scss";
+import Loading from "components/Loading/Loading";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getProducts } from "../../redux/actions/productsActions";
@@ -36,7 +37,7 @@ function Products({ categoryID, allProducts }) {
       <div className="card-top-container">
         {/* FILTERED PRODUCTS */}
         <div className="card-wrapper">
-          {products &&
+          {products ? (
             categoryID &&
             products
               .filter((filteredProduct) => filteredProduct.category.id === categoryID)
@@ -69,7 +70,13 @@ function Products({ categoryID, allProducts }) {
 
                   <div className="card-product-price">{filteredItem.price} TL</div>
                 </button>
-              ))}
+              ))
+          ) : (
+            <div className="loading-container">
+              <Loading />
+              <h1>Ürünler Yükleniyor...</h1>
+            </div>
+          )}
         </div>
 
         {/* ALL PRODUCTS */}

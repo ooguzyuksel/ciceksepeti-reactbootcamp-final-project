@@ -28,6 +28,7 @@ function Categories() {
   useEffect(() => {
     dispatch(getCategories());
   }, []);
+
   // Calling queried categories with componentDidUpdate via useEffect
   useEffect(() => {
     dispatch(getCategories(setCategoryID(storedCategoryID)));
