@@ -1,5 +1,5 @@
 /* eslint-disable react/button-has-type */
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ModalSecond from "components/ModalSecond/ModalSecond";
 import { ToastContainer, toast } from "react-toastify";
@@ -12,6 +12,7 @@ function GivenOffers() {
   const givenOfferItems = useSelector((state) => state.givenOffers.givenOffers.data);
   const dispatch = useDispatch();
   const modalSecondRef = useRef();
+  const [itemData, setItemData] = useState("");
   const openModalSecond = () => {
     modalSecondRef.current.modalSecondOpener();
   };
@@ -27,13 +28,11 @@ function GivenOffers() {
 
   const purchaseHandler = (e) => {
     e.preventDefault();
-    dispatch(getPurchasedItem());
+    dispatch(getPurchasedItem(itemData));
     closeModalSecond();
     notifyPurchaseSuccess("Satın Alındı");
   };
 
-  console.log("TEKLİF VERDİKLERİM:", givenOfferItems);
-  // console.log("Given test item:", givenoffertest);
   return (
     <div className="given-offers-wrapper">
       {givenOfferItems?.map((offeredItem) => (
@@ -65,6 +64,7 @@ function GivenOffers() {
                       <button
                         onClick={() => {
                           openModalSecond();
+                          setItemData(offeredItem?.product?.id);
                         }}
                       >
                         Satın Al

@@ -190,7 +190,6 @@ function AddProduct() {
       setCategoryTitle("");
       setCategoryId("");
       setDescription("");
-      setIsOfferable("");
       setImage("");
     }
   };

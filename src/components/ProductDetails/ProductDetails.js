@@ -1,11 +1,5 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable no-alert */
-/* eslint-disable radix */
-/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/button-has-type */
-/* eslint-disable dot-notation */
-/* eslint-disable no-multi-assign */
-/* eslint-disable no-undef */
+
 import React, { useState, useEffect, useRef } from "react";
 import "./productDetails.scss";
 import { useParams } from "react-router-dom";
@@ -91,7 +85,7 @@ function ProductDetails() {
     e.preventDefault();
     closeModalSecond();
     notifyPurchaseSuccess();
-    dispatch(getPurchasedItem());
+    dispatch(getPurchasedItem(productDetailId));
   };
 
   // Fetching asyncroniously id entered data in order to show it Product Details Page
@@ -164,6 +158,7 @@ function ProductDetails() {
               )} */}
 
             <div>
+              {/* {console.log("buna bi bak:", getProduct)} */}
               {!getProduct.isSold ? (
                 <>
                   <div className="button-wrapper-purchase-button">

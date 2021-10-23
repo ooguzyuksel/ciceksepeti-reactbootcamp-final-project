@@ -73,7 +73,7 @@ function ReceivedOffers() {
             </div>
             <div className="right-side">
               <div className="given-offer-result">
-                {receivedOffer?.status === "offered" && (
+                {receivedOffer?.status === "offered" && receivedOffer?.isSold !== "sold" && (
                   <>
                     <div>
                       <button
@@ -93,15 +93,18 @@ function ReceivedOffers() {
                     </div>
                   </>
                 )}
-                {console.log("gelen teklifler", receivedOffer.status)}
 
-                {receivedOffer?.status !== "offered" && receivedOffer?.status === "rejected" && (
+                {receivedOffer?.status === "offered" && receivedOffer?.isSold === "sold" && (
+                  <div className="offer-bought-span">Farklı Müşteri Satın Aldı</div>
+                )}
+
+                {receivedOffer?.status === "rejected" && (
                   <span className="offer-rejected-span">Reddedildi</span>
                 )}
                 {/* {receivedOffer?.status !== "offered" && receivedOffer?.isSold === "sold" && (
                   <span className="offer-bought-span">Müşteri Ürünü Satın Aldı</span>
                 )} */}
-                {receivedOffer?.status !== "offered" && receivedOffer?.status === "accepted" && (
+                {receivedOffer?.status === "accepted" && (
                   <span className="offer-accepted-span">Onaylandı</span>
                 )}
               </div>

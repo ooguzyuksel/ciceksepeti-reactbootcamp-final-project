@@ -12,10 +12,10 @@ const postPurchaseItemSuccess = (data) => ({
   payload: data,
 });
 
-export const getPurchasedItem = () => async (dispatch) => {
+export const getPurchasedItem = (productPurchaseID) => async (dispatch) => {
   dispatch(postPurchaseItemPending());
   return axios
-    .put(`https://bootcampapi.techcs.io/api/fe/v1/product/purchase/${productID}`)
+    .put(`https://bootcampapi.techcs.io/api/fe/v1/product/purchase/${productPurchaseID}`)
     .then((data) => dispatch(postPurchaseItemSuccess(data)))
     .catch((error) => console.log("Category Error:", error));
 };

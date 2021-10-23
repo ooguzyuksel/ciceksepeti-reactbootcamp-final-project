@@ -9,9 +9,7 @@ import { getGivenOffers } from "../../redux/actions/givenOffers";
 function Products({ categoryID, allProducts }) {
   let { user } = useSelector((state) => state.auth);
   const products = useSelector((state) => state.products.products.data);
-  // const [clickedProductID, setClickedProductID] = useState(null);
   const dispatch = useDispatch();
-  const givenOfferItems = useSelector((state) => state.givenOffers.givenOffers.data);
   let history = useHistory();
 
   // FETCHING ALL PRODUCTS FROM REDUX
@@ -22,7 +20,6 @@ function Products({ categoryID, allProducts }) {
 
   // STORING CLICKED PRODUCT
   const clickedProductHandler = (itemProductId) => {
-    // setClickedProductID(itemProductId);
     {
       user && history.push(`/product/${itemProductId}`);
       localStorage.setItem("productId", itemProductId);
