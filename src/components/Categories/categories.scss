@@ -16,7 +16,12 @@
   width: 80vw;
   height: 50px;
   border-bottom: 1px solid rgba($categoryBlack, $alpha: 0.1);
-  overflow: hidden;
+  overflow-x: scroll;
+}
+
+.category-wrapper::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 .category-item {

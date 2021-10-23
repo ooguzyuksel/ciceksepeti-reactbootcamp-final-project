@@ -213,6 +213,30 @@
   display: none;
 }
 
+.upload-area {
+  border: 1px solid green;
+}
+
+.progress-bar-wrapper {
+  width: 100%;
+}
+.progress-bar-container {
+  background: $backgroundGray;
+  border-radius: 10px;
+}
+
+.progress-bar-upload-percentage {
+  background: $categoryClickedBlue;
+  width: 70%;
+  border-radius: 10px;
+  display: block;
+
+  &::before {
+    content: "-";
+    color: $categoryClickedBlue;
+  }
+}
+
 @media only screen and (max-width: 600px) {
   .sub-container-secondary {
     max-width: 100%;

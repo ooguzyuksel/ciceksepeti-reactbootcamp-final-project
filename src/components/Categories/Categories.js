@@ -10,11 +10,13 @@ function Categories() {
   const dispatch = useDispatch();
   const [categoryID, setCategoryID] = useState(null);
   const [allProducts, setAllProducts] = useState(true);
+  const storedCategoryID = localStorage.getItem("categoryID");
 
   // Catching Category ID in order to Filter Product by prop drilling
   const categoryIdHandler = (id) => {
     setCategoryID(id);
     setAllProducts(false);
+    localStorage.setItem("categoryID", id);
   };
 
   const allProductsHandler = () => {
@@ -26,6 +28,10 @@ function Categories() {
   useEffect(() => {
     dispatch(getCategories());
   }, []);
+  // Calling queried categories with componentDidUpdate via useEffect
+  useEffect(() => {
+    dispatch(getCategories(setCategoryID(storedCategoryID)));
+  }, [storedCategoryID]);
 
   return (
     <div>

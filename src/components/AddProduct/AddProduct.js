@@ -1,3 +1,4 @@
+/* eslint-disable react/self-closing-comp */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable react/button-has-type */
 import Navbar from "components/Navbar/Navbar";
@@ -20,7 +21,6 @@ function AddProduct() {
   const statusses = useSelector((state) => state.itemStatusses.statusses.data);
   const brands = useSelector((state) => state.brands.brands.data);
   const colors = useSelector((state) => state.colors.colors.data);
-  const uploadedInformations = useSelector((state) => state);
   const dispatch = useDispatch();
 
   // Notification Pop-up Library
@@ -32,7 +32,7 @@ function AddProduct() {
 
   // Image uploading state
   const [image, setImage] = useState("");
-  const [imageUploadError, setImageUploadError] = useState(null);
+  const [uploadPercentage, setUploadPercentage] = useState(0);
 
   // Spagetti code but the best way i know for now :(
   const [price, setPrice] = useState("");
@@ -55,18 +55,37 @@ function AddProduct() {
     dispatch(getColors());
   }, []);
 
-  // Uploading img process
+  // Setting upload percentage to " 0 " after image uploaded successfully
+  useEffect(() => {
+    setUploadPercentage(0);
+  }, [uploadPercentage === 100]);
+
+  // Uploading img process & handling percentage for progress bar
   const uploadImage = async (e) => {
+    setUploadPercentage(0);
     const files = e.target.files;
     const data = new FormData();
     data.append("file", files[0]);
+    console.log("dosya boyutu:", files[0]);
+    const options = {
+      onUploadProgress: (ProgressEvent) => {
+        const { loaded, total } = ProgressEvent;
+        let percent = Math.floor((loaded * 100) / total);
+        if (percent < 100) {
+          setUploadPercentage(percent);
+        }
+      },
+    };
     await axios
-      .post("https://bootcampapi.techcs.io/api/fe/v1/file/upload/image", data, {
+      .post("https://bootcampapi.techcs.io/api/fe/v1/file/upload/image", data, options, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((res) => setImage(res.data.url))
+      .then((res) => {
+        setImage(res.data.url);
+        setUploadPercentage(100);
+      })
       .catch((err) => errorNotification("DİKKAT! Resim 400 KB'dan fazla olamaz.", err));
   };
 
@@ -327,28 +346,43 @@ function AddProduct() {
                 <div className="right-area-wrapper">
                   <div>
                     <h3>Ürün Görseli</h3>
-                    {!image && (
-                      <div className="right-area-container">
-                        <img src={uploadicon} alt="uploadicon" />
-                        <p>Sürükleyip bırakarak yükle veya</p>
-                        {/* Image Uploading Section */}
-                        <div>
-                          <input
-                            type="file"
-                            name="file"
-                            id="uploadimg"
-                            accept=".png, .jpg, .jpeg"
-                            className="upload-input"
-                            placeholder="Bir resim seçiniz"
-                            onChange={uploadImage}
-                          />
-
-                          <label className="upload-button" htmlFor="uploadimg">
-                            Görsel Seçin
-                          </label>
+                    {uploadPercentage >= 1 && uploadPercentage <= 100 ? (
+                      <div className="right-area-container upload-area">
+                        <p>{uploadPercentage}%</p>
+                        <div className="progress-bar-wrapper">
+                          <div className="progress-bar-container">
+                            <div
+                              className="progress-bar-upload-percentage"
+                              style={{ width: `${uploadPercentage}%` }}
+                            ></div>
+                          </div>
                         </div>
-                        <small>PNG ve JPEG Dosya boyutu: max. 100kb</small>
+                        <p>Yükleniyor</p>
                       </div>
+                    ) : (
+                      !image && (
+                        <div className="right-area-container">
+                          <img src={uploadicon} alt="uploadicon" />
+                          <p>Sürükleyip bırakarak yükle veya</p>
+                          {/* Image Uploading Section */}
+                          <div>
+                            <input
+                              type="file"
+                              name="file"
+                              id="uploadimg"
+                              accept=".png, .jpg, .jpeg"
+                              className="upload-input"
+                              placeholder="Bir resim seçiniz"
+                              onChange={uploadImage}
+                            />
+
+                            <label className="upload-button" htmlFor="uploadimg">
+                              Görsel Seçin
+                            </label>
+                          </div>
+                          <small>PNG ve JPEG Dosya boyutu: max. 100kb</small>
+                        </div>
+                      )
                     )}
                     {image && (
                       <div className="uploaded-image-container">
