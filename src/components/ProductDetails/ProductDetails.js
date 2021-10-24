@@ -143,7 +143,7 @@ function ProductDetails() {
             </div>
             <h2>{getProduct?.price} TL</h2>
 
-            {/* {givenOfferedPrice.data?.length !== 0 &&
+            {givenOfferedPrice.data?.length !== 0 &&
               givenOfferedPrice.data?.map(
                 (item) =>
                   item.product.id === productDetailId && (
@@ -155,7 +155,7 @@ function ProductDetails() {
                       </span>
                     </div>
                   )
-              )} */}
+              )}
 
             <div>
               {/* {console.log("buna bi bak:", getProduct)} */}
