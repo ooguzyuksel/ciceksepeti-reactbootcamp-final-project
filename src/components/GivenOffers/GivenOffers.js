@@ -50,9 +50,14 @@ function GivenOffers() {
           </div>
           <div className="right-side">
             <div className="given-offer-result">
-              {offeredItem?.isSold === "sold" && (
+              {offeredItem?.isSold === "sold" && offeredItem?.status === "accepted" && (
                 <span className="offer-bought-span">Satın Alındı</span>
               )}
+
+              {offeredItem?.isSold === "sold" && offeredItem?.status === "offered" && (
+                <span className="offer-sold-someone-else-span">Farklı Müşteri Satın Aldı</span>
+              )}
+
               {!offeredItem?.isSold && (
                 <div>
                   {offeredItem?.status !== "accepted" && offeredItem?.status !== "rejected" && (

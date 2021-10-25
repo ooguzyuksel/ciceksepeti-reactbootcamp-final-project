@@ -101,9 +101,7 @@ function ReceivedOffers() {
                 {receivedOffer?.status === "rejected" && (
                   <span className="offer-rejected-span">Reddedildi</span>
                 )}
-                {/* {receivedOffer?.status !== "offered" && receivedOffer?.isSold === "sold" && (
-                  <span className="offer-bought-span">Müşteri Ürünü Satın Aldı</span>
-                )} */}
+
                 {receivedOffer?.status === "accepted" && (
                   <span className="offer-accepted-span">Onaylandı</span>
                 )}

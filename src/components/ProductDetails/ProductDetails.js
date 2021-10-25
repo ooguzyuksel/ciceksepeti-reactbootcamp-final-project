@@ -258,7 +258,7 @@ function ProductDetails() {
                               type="radio"
                               name="offer"
                               id={radioValue.id}
-                              value={radioValue.value * getProduct?.price?.toFixed(0)}
+                              value={Math.floor(radioValue.value * getProduct?.price)}
                               onClick={radioValueHandler}
                             />
                             <label htmlFor={radioValue.id}>{radioValue.title}</label>
