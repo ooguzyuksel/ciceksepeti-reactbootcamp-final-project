@@ -56,8 +56,6 @@ function Login() {
     ) {
       dispatch(loginInitiate(mail, password));
     }
-
-    // If response returns an user not found error below part will be triggered
   };
 
   // this is going to return entered value into input

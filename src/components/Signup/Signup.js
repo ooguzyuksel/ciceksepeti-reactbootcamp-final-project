@@ -39,14 +39,6 @@ function Signup() {
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
-    // if (newMail.length === 0 || newPassword.length === 0) {
-    //   notifyError("Mail veya Parola Boş Olamaz.");
-    // } else if (newPassword.length >= 8 && newPassword.length <= 20) {
-    //   dispatch(registerInitiate(newMail, newPassword));
-    // } else {
-    //   notifyError("Parola 8 Karakterden uzun , 20 Karakterden kısa olmalıdır.");
-    // }
-
     if (newMail.length === 0 || newPassword.length === 0) {
       notifyError("Mail veya Parola Boş Olamaz.");
     } else if (!newMail.includes("@") || !newMail.includes(".")) {
@@ -61,8 +53,6 @@ function Signup() {
     ) {
       dispatch(registerInitiate(newMail, newPassword));
     }
-
-    // If response returns an user not found error below part will be triggered
   };
 
   const onChangeHandler = (event) => {

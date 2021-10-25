@@ -42,9 +42,7 @@ function ReceivedOffers() {
   const onSubmitHandler = (e) => {
     e.preventDefault();
   };
-  console.log("receivedOfferItems", receivedOfferItems);
-  console.log("Accept Offer State", acceptOfferResult);
-  console.log("Reject Offer State", rejectOfferResult);
+
   return (
     <div>
       {receivedOfferItems?.length === 0 && (
@@ -95,7 +93,7 @@ function ReceivedOffers() {
                 )}
 
                 {receivedOffer?.status === "offered" && receivedOffer?.isSold === "sold" && (
-                  <div className="offer-bought-span">Farklı Müşteri Satın Aldı</div>
+                  <div className="offer-bought-span">Ürün Teklif Dışında Satıldı</div>
                 )}
 
                 {receivedOffer?.status === "rejected" && (

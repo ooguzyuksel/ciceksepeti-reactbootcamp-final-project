@@ -70,7 +70,6 @@ function MyAccount() {
               </div>
             </div>
           </div>
-          {/* <OrderedItems /> */}
         </div>
       )}
       {!user && <Redirect to="/login" />}

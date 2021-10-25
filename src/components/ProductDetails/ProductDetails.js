@@ -24,7 +24,7 @@ function ProductDetails() {
   const [getProduct, setGetProduct] = useState({});
   const [offeredValue, setOfferedValue] = useState(null);
   const givenOfferedPrice = useSelector((state) => state.givenOffers.givenOffers);
-  const [buttonController, setButtonController] = useState(false);
+  const [errorItem, setErrorItem] = useState(null);
   const dispatch = useDispatch();
 
   // MODALS
@@ -93,7 +93,7 @@ function ProductDetails() {
     await axios
       .get(`https://bootcampapi.techcs.io/api/fe/v1/product/${productDetailId}`)
       .then((data) => setGetProduct(data.data))
-      .catch((error) => console.log(error));
+      .catch((error) => setErrorItem(error));
   };
 
   // Mounting getProductData() function when get data productDetailId drilled from parent component
@@ -151,7 +151,6 @@ function ProductDetails() {
                       <span>
                         <span className="final-offered-price-subtitle">Verilen Teklif : </span>
                         <b>{item.offeredPrice} TL</b>
-                        {console.log("Mapden gelenler:", item.product.id)}
                       </span>
                     </div>
                   )

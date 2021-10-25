@@ -58,6 +58,10 @@ function GivenOffers() {
                 <span className="offer-sold-someone-else-span">Farklı Müşteri Satın Aldı</span>
               )}
 
+              {offeredItem?.isSold === "sold" && offeredItem?.status === "rejected" && (
+                <span className="offer-rejected-span">Reddedildi</span>
+              )}
+
               {!offeredItem?.isSold && (
                 <div>
                   {offeredItem?.status !== "accepted" && offeredItem?.status !== "rejected" && (

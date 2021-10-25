@@ -1,10 +1,8 @@
 import React from "react";
-// import { useHistory } from "react-router-dom";
-import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Navbar from "components/Navbar/Navbar";
 import Categories from "components/Categories/Categories";
-// import Products from "components/Products/Products";
 import homepageBanner from "../../images/homepageBanner.png";
 import "./home.scss";
 import { logoutInitiate } from "../../redux/actions/actions";

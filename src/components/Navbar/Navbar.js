@@ -55,9 +55,6 @@ function Navbar({ logoutUser }) {
                 </span>{" "}
                 Hesabım
               </Link>
-              {/* <button type="submit" onClick={logoutUser}>
-                Çıkış Yap
-              </button> */}
             </>
           )}
         </div>

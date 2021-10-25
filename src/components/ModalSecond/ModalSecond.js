@@ -24,15 +24,7 @@ const ModalSecond = forwardRef(({ children }, ref) => {
     return ReactDOM.createPortal(
       <div className="modal-wrapper">
         <div className="modal-container">
-          <div className="modal-card">
-            {/* <div className="white-area-top">
-              <span>Teklif Ver</span>
-              <button className="close-modal" onClick={() => closeModal()}>
-                &times;
-              </button>
-            </div> */}
-            {children}
-          </div>
+          <div className="modal-card">{children}</div>
         </div>
       </div>,
       document.getElementById("modal-root")
