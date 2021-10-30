@@ -48,3 +48,27 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
+
+
+## Performance Reports
+
+### Desktop Reports
+
+#### Google Pagespeed Insight
+
+<img width="1429" alt="Ekran Resmi 2021-10-30 20 56 36" src="https://user-images.githubusercontent.com/56235622/139553361-23958767-fe78-4f6f-9253-41773fb63f9c.png">
+
+#### Light House
+
+<img width="1438" alt="Ekran Resmi 2021-10-30 21 01 42" src="https://user-images.githubusercontent.com/56235622/139553672-af067018-c022-46ab-baed-b3d7c8154e68.png">
+
+### Mobile Reports
+
+#### Google Pagespeed Insight
+
+<img width="1440" alt="Ekran Resmi 2021-10-30 21 03 33" src="https://user-images.githubusercontent.com/56235622/139553689-c8ce31ec-f83e-4f0c-b3b9-2c88581d32eb.png">
+
+#### Light House
+
+<img width="1436" alt="Ekran Resmi 2021-10-30 21 00 11" src="https://user-images.githubusercontent.com/56235622/139553702-aab63215-652a-4366-b000-0152fe0d3d7a.png">
+
